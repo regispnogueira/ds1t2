@@ -25,8 +25,7 @@ public class Categoria implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    @OneToMany
-    private List<Subcategoria> subcategorias;
+    
     public Long getId() {
         return id;
     }
@@ -68,8 +67,5 @@ public class Categoria implements Serializable {
         this.nome = nome;
     }
 
-    public List<Subcategoria> getSubcategorias() {
-        return this.subcategorias;
-    }
     
 }

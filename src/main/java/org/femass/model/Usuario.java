@@ -22,9 +22,8 @@ public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    protected String nome;
-    protected String email;
-    protected String senha;
+    private String email;
+    private String senha;
 
     public Long getId() {
         return id;
@@ -57,14 +56,6 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "org.femass.model.Usuario[ id=" + id + " ]";
-    }
-
-    public String getNome() {
-        return this.nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getEmail() {

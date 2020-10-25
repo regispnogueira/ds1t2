@@ -10,18 +10,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
  * @author Régis
  */
 @Entity
-public class Administrador extends Usuario implements Serializable {
+public class Administrador implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String nome;
+     @ManyToOne
+    private Usuario usuario;
 
     public Long getId() {
         return id;
@@ -54,6 +58,22 @@ public class Administrador extends Usuario implements Serializable {
     @Override
     public String toString() {
         return "org.femass.model.Administrador[ id=" + id + " ]";
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
     
     public void aprovarAnuncio(){

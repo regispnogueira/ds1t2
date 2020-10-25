@@ -28,7 +28,7 @@ public class Anuncio implements Serializable {
     private String nome;
     @ManyToOne
     private Fornecedor fornecedor;
-    @OneToOne
+    @ManyToOne
     private Administrador aprovacao;
     private LocalDate dataaprovacao;
     private String descricao;
@@ -71,6 +71,78 @@ public class Anuncio implements Serializable {
     @Override
     public String toString() {
         return "org.femass.model.Anuncio[ id=" + id + " ]";
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Fornecedor getFornecedor() {
+        return fornecedor;
+    }
+
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
+    }
+
+    public Administrador getAprovacao() {
+        return aprovacao;
+    }
+
+    public void setAprovacao(Administrador aprovacao) {
+        this.aprovacao = aprovacao;
+    }
+
+    public LocalDate getDataaprovacao() {
+        return dataaprovacao;
+    }
+
+    public void setDataaprovacao(LocalDate dataaprovacao) {
+        this.dataaprovacao = dataaprovacao;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Double getValor() {
+        return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
+    public LocalDate getValidade() {
+        return validade;
+    }
+
+    public void setValidade(LocalDate validade) {
+        this.validade = validade;
+    }
+
+    public Subcategoria getSubcategoria() {
+        return subcategoria;
+    }
+
+    public void setSubcategoria(Subcategoria subcategoria) {
+        this.subcategoria = subcategoria;
+    }
+
+    public TipoProduto getEstado() {
+        return estado;
+    }
+
+    public void setEstado(TipoProduto estado) {
+        this.estado = estado;
     }
     
 }
