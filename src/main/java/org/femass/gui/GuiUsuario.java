@@ -39,27 +39,27 @@ public class GuiUsuario implements Serializable {
     public String cadastrar(){
         usuario = new Usuario();
         alterando = false;
-        return "cadUsuario";
+        return "CadUsuario";
     }
     
     public String alterar(Usuario _usuario){
         this.usuario = _usuario;
         alterando = true;
-        return "cadUsuario";
+        return "CadUsuario";
     }
     
     public String deletar(Usuario _usuario) {
         usuarioDao.deletar(_usuario);
-        return "cadUsuario";
+        return "CadUsuario";
     }
     
     public String gravar(){
-        if(!alterando){
-            usuarioDao.gravar(usuario);
-        } else {
-            usuarioDao.alterar(usuario);
-        }
-        return "cadFornecedor";
+        alterando = false;    
+        fornecedor = new Fornecedor();
+        usuario = new Usuario();
+        fornecedor.setUsuario(usuario);
+        usuarioDao.gravar(usuario);
+        return "CadFornecedor";
     }
 
     public Usuario getUsuario() {

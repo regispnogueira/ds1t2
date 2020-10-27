@@ -8,7 +8,9 @@
     </h:head>
     <h:body>
         <h:form>
-            <p:commandLink value="Cadastrar Usuario" action="#{guiUsuario.cadastrar()}" ajax="false" /> 
+            <h:panelGrid columns="1">
+                <p:commandLink value="Cadastrar" action="#{guiUsuario.cadastrar()}" ajax="false"/>
+            </h:panelGrid>
         </h:form>
     </h:body>
 </html>
