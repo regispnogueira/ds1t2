@@ -66,6 +66,11 @@
             <artifactId>font-awesome</artifactId>
             <version>5.14.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.16</version>
+        </dependency>
     </dependencies>
     
      <build>
