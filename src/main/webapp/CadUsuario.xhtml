@@ -8,13 +8,14 @@
     </h:head>
     <h:body>
         <h:form>
+            <p:messages id="messagesLogin"/>
             <p:panelGrid columns="2">
                 <p:outputLabel value="E-mail" />
-                <p:inputText value="#{guiUsuario.usuario.email}" />
+                <p:inputText value="#{guiUsuario.usuario.email}" required="true" requiredMessage="Campo E-mail é obrigatório" />
                 <p:outputLabel value="Senha" />
-                <p:password value="#{guiUsuario.usuario.senha}" />
+                <p:password value="#{guiUsuario.usuario.senha}" required="true" requiredMessage="Campo Senha é obrigatório" />
             </p:panelGrid>
-            <p:commandButton value="Cadastrar" action="#{guiUsuario.gravar()}" ajax="false" />
+            <p:commandButton value="Cadastrar" action="#{guiUsuario.gravar()}" ajax="false" update="messagesLogin"/>
         </h:form>
     </h:body>
 </html>

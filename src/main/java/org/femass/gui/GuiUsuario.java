@@ -55,6 +55,7 @@ public class GuiUsuario implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário não encontrado!","Erro no Login!"));
             return null;
         } else {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usuario);
             return "LstAnuncio";
         }
     }  

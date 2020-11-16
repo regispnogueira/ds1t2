@@ -8,30 +8,20 @@
     </h:head>
     <h:body>
         <h:form>
-            <p:commandButton value="Incluir" action="#{guiAluno.cadastrar()}" ajax="false" icon="fa fa-align-justify" />
-            <p:dataTable value="#{guiAluno.alunos}" var="al" >
-                <p:column headerText="Matrícula">
-                    <p:outputLabel value="#{al.matricula}" />
+            <p:commandButton value="Incluir" action="#{guiAnuncio.cadastrar()}" ajax="false" icon="fa fa-align-justify" />
+            <p:dataTable value="#{guiAnuncio.anunciosfornecedor}" var="a" >
+                <p:column headerText="Nome">
+                    <p:outputLabel value="#{a.nome}" />
                 </p:column>
-                <p:column headerText="Nome" filterBy="#{al.nome}">
-                    <p:commandLink value="#{al.nome}"  action="#{guiAluno.alterar(al)}" ajax="false"/>
+                <p:column headerText="Preço" filterBy="#{a.nome}">
+                    <p:commandLink value="#{a.valor}"  action="#{guiAnuncio.alterar(a)}" ajax="false"/>
                 </p:column>
-                <p:column headerText="Curso">
-                    <p:commandLink value="#{al.curso.nome}" />
-                </p:column>
-                
-                <p:column headerText="Endereço">
-                    <p:outputLabel value="#{al.endereco}" />
-                </p:column>
-                <p:column headerText="Telefone">
-                    <p:outputLabel value="#{al.telefone}" />
-                </p:column>
-                <p:column headerText="Nascimento">
-                    <p:outputLabel value="#{al.dataNascimento}" converter="localDateFacesConverter" />
+                <p:column headerText="Validade">
+                    <p:commandLink value="#{a.validade}" />
                 </p:column>
                 <p:column >
-                    <p:commandButton  id="cmdAlterar" action="#{guiAluno.alterar(al)}" ajax="false" icon="fa fa-edit" >
-                        <p:tooltip id="toolTipAlterar" for="cmdAlterar" value="Altera um Aluno" position="top"/>
+                    <p:commandButton  id="cmdAlterar" action="#{guiAnuncio.alterar(a)}" ajax="false" icon="fa fa-edit" >
+                        <p:tooltip id="toolTipAlterar" for="cmdAlterar" value="Altera um anuncio" position="top"/>
                     </p:commandButton>
                 </p:column>
                 

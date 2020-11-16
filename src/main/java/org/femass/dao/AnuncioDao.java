@@ -40,5 +40,9 @@ public class AnuncioDao {
         Query q = em.createQuery("select a from Anuncio a order by a.nome");
         return q.getResultList();
     }
+    public List<Anuncio> getAnunciosFornecedor(Long idUsuario) {
+        Query q = em.createQuery("select a from Anuncio a where a.fornecedor.usuario = %idUsuario");
+        return q.getResultList();
+    }
            
 }

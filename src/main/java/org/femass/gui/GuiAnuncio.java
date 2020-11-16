@@ -32,6 +32,7 @@ public class GuiAnuncio implements Serializable {
     private Boolean alterando;
     private Anuncio anuncio;
     private List<Anuncio> anuncios;
+    private List<Anuncio> anunciosfornecedor;
     private Fornecedor fornecedor;
     private List<Subcategoria> subcategorias;
     private Long idSubcategoria;
@@ -73,11 +74,14 @@ public class GuiAnuncio implements Serializable {
     @PostConstruct
     public void abrirTela(){
         fornecedor = (Fornecedor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("fornecedor");
+        usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        //anunciosfornecedor = anuncioDao.getAnunciosFornecedor(usuario.getId());
         anuncios = anuncioDao.getAnuncios();
         subcategorias = subcategoriaDao.getSubcategorias();
     }
     
     public String gravar(){
+        anuncio.setFornecedor(fornecedor);
         anuncioDao.gravar(anuncio);
         
         return "LstAnuncio";
@@ -126,6 +130,22 @@ public class GuiAnuncio implements Serializable {
     public List<Subcategoria> getSubcategorias(){
         subcategorias = subcategoriaDao.getSubcategorias();
         return subcategorias;
+    }
+
+    public List<Anuncio> getAnuncios() {
+        return anuncios;
+    }
+
+    public void setAnuncios(List<Anuncio> anuncios) {
+        this.anuncios = anuncios;
+    }
+
+    public List<Anuncio> getAnunciosfornecedor() {
+        return anunciosfornecedor;
+    }
+
+    public void setAnunciosfornecedor(List<Anuncio> anunciosfornecedor) {
+        this.anunciosfornecedor = anunciosfornecedor;
     }
      
 }

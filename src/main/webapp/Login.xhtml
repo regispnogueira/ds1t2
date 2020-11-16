@@ -4,17 +4,18 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Login</title>
+       <title>Login</title>
     </h:head>
     <h:body>
         <h:form>
+            <p:messages id="messagesLogin"/>
             <p:panelGrid columns="2">
                 <p:outputLabel value="E-mail" />
-                <p:inputText value="#{guiUsuario.usuario.email}" />
+                <p:inputText value="#{guiUsuario.usuario.email}" required="true" requiredMessage="Campo E-mail é obrigatório" />
                 <p:outputLabel value="Senha" />
-                <p:password value="#{guiUsuario.usuario.senha}" />
+                <p:password value="#{guiUsuario.usuario.senha}" required="true" requiredMessage="Campo Senha é obrigatório" />
             </p:panelGrid>
-            <p:commandButton value="Entrar" action="#{guiUsuario.logar()}" ajax="false" />
+            <p:commandButton value="Entrar" action="#{guiUsuario.logar()}" ajax="false" update="messagesLogin" />
         </h:form>
     </h:body>
 </html>

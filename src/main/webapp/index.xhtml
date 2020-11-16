@@ -12,8 +12,18 @@
             <ui:define name="content">
                 <h:form>
                     <h:panelGrid columns="1">
-                        <p:commandLink value="Cadastrar" action="#{guiUsuario.cadastrar()}" ajax="false"/>
-                        <p:commandLink value="Login" action="#{guiUsuario.login()}" ajax="false"/>
+                        <ui:insert name="top" >
+                            <p:commandLink value="Cadastrar" action="#{guiUsuario.cadastrar()}" ajax="false" />
+                            <p:commandLink value="Login" action="#{guiUsuario.login()}" ajax="false"/>
+                        </ui:insert>
+                        <p:dataGrid var="a" value="#{guiAnuncio.anuncios}" columns="4" layout="grid" rows="8" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="6,12,16" >
+                            <p:panel header="#{a.subcategoria}" style="text-align:center">
+                                <h:panelGrid columns="1" style="width:100%">
+                                    <p:graphicImage name="demo/images/car/#{a.descricao}.gif"/> 
+                                    <h:outputText value="#{a.valor}" />
+                                </h:panelGrid>
+                             </p:panel>    
+                        </p:dataGrid>
                     </h:panelGrid>
                 </h:form>
             </ui:define>
