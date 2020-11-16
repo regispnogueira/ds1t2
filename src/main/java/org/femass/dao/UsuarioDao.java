@@ -8,6 +8,7 @@ package org.femass.dao;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.femass.model.Usuario;
@@ -39,6 +40,16 @@ public class UsuarioDao {
     public List<Usuario> getUsuarios() {
         Query q = em.createQuery("select u from Usuario u order by u.email");
         return q.getResultList();
+    }
+    
+    public Usuario getUsuario(String email, String senha) {
+
+      try {
+        Usuario usuario = (Usuario) em.createQuery("SELECT u from Usuario u where u.email = :email and u.senha = :senha").setParameter("email", email).setParameter("senha", senha).getSingleResult();
+        return usuario;
+      } catch (NoResultException e) {
+            return null;
+      }
     }
            
 }

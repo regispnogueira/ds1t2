@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.base64.Base64;
 
 /**
  *
@@ -25,11 +26,16 @@ public class Fornecedor implements Serializable {
     private Long id;
     private String nome;
     private String endereco;
+    private String cep;
     @ManyToOne
     private Bairro bairro;
     private String telefone;
-    private Boolean tipodoc;
-    private String documento;
+    private String whatsapp;
+    private String url;
+    private String facebook;
+    private String instagram;
+    private String foto;
+    private byte[] fotobyte;
     @ManyToOne
     private Usuario usuario;
 
@@ -63,7 +69,7 @@ public class Fornecedor implements Serializable {
 
     @Override
     public String toString() {
-        return "org.femass.model.Fornecedor[ id=" + id + " ]";
+        return this.nome;
     }
 
     public String getNome() {
@@ -74,8 +80,6 @@ public class Fornecedor implements Serializable {
         this.nome = nome;
     }
 
-    
-    
     public String getEndereco() {
         return endereco;
     }
@@ -101,22 +105,6 @@ public class Fornecedor implements Serializable {
         this.telefone = telefone;
     }
 
-    public Boolean getTipodoc() {
-        return tipodoc;
-    }
-
-    public void setTipodoc(Boolean tipodoc) {
-        this.tipodoc = tipodoc;
-    }
-
-    public String getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(String documento) {
-        this.documento = documento;
-    }  
-
     public Usuario getUsuario() {
         return usuario;
     }
@@ -124,5 +112,67 @@ public class Fornecedor implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getWhatsapp() {
+        return whatsapp;
+    }
+
+    public void setWhatsapp(String whatsapp) {
+        this.whatsapp = whatsapp;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public byte[] getFotobyte() {
+        return fotobyte;
+    }
+
+    public void setFotobyte(byte[] fotobyte) {
+        this.fotobyte = fotobyte;
+    }
+    
+    public void upload(){
+        this.foto = Base64.toBase64String(this.fotobyte);
+        
+    }
+    
     
 }

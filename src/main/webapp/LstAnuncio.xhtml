@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Anúncios</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:commandButton value="Incluir" action="#{guiAluno.cadastrar()}" ajax="false" icon="fa fa-align-justify" />
+            <p:dataTable value="#{guiAluno.alunos}" var="al" >
+                <p:column headerText="Matrícula">
+                    <p:outputLabel value="#{al.matricula}" />
+                </p:column>
+                <p:column headerText="Nome" filterBy="#{al.nome}">
+                    <p:commandLink value="#{al.nome}"  action="#{guiAluno.alterar(al)}" ajax="false"/>
+                </p:column>
+                <p:column headerText="Curso">
+                    <p:commandLink value="#{al.curso.nome}" />
+                </p:column>
+                
+                <p:column headerText="Endereço">
+                    <p:outputLabel value="#{al.endereco}" />
+                </p:column>
+                <p:column headerText="Telefone">
+                    <p:outputLabel value="#{al.telefone}" />
+                </p:column>
+                <p:column headerText="Nascimento">
+                    <p:outputLabel value="#{al.dataNascimento}" converter="localDateFacesConverter" />
+                </p:column>
+                <p:column >
+                    <p:commandButton  id="cmdAlterar" action="#{guiAluno.alterar(al)}" ajax="false" icon="fa fa-edit" >
+                        <p:tooltip id="toolTipAlterar" for="cmdAlterar" value="Altera um Aluno" position="top"/>
+                    </p:commandButton>
+                </p:column>
+                
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

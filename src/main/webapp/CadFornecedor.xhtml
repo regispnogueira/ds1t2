@@ -8,7 +8,7 @@
         <title>Cadastro Fornecedor</title>
     </h:head>
     <h:body>
-        <h:form>
+        <h:form enctype="multipart/form-data">
             <p:panelGrid columns="2" >
                 <p:outputLabel value="Nome*" />
                 <p:inputText value="#{guiFornecedor.fornecedor.nome}" />
@@ -20,6 +20,18 @@
                 <p:selectOneMenu value="#{guiFornecedor.idBairro}" style="width:250px"  >
                     <f:selectItems value="#{guiFornecedor.bairros}" var="b" itemLabel="#{b.nome}" itemValue="#{b.id}"/>
                 </p:selectOneMenu>
+                <p:outputLabel value="CEP*" />
+                <p:inputMask value="#{guiFornecedor.fornecedor.cep}" mask="99999-999" />
+                <p:outputLabel value="URL" />
+                <p:inputText value="#{guiFornecedor.fornecedor.url}" />
+                <p:outputLabel value="Facebook" />
+                <p:inputText value="#{guiFornecedor.fornecedor.facebook}" />
+                <p:outputLabel value="Instagram" />
+                <p:inputText value="#{guiFornecedor.fornecedor.instagram}" />
+                <p:outputLabel value="Foto (Fachada ou Logo)*" />
+                <p:fileUpload label="Foto" value="#{guiFornecedor.fornecedor.fotobyte}" mode="simple" skinSimple="true" />
+                <br />
+                <p:commandButton value="Carregar" ajax="false" action="#{guiFornecedor.fornecedor.upload}" />
             </p:panelGrid>
             <p:commandButton value="Gravar" action="#{guiFornecedor.gravar()}" ajax="false" />
         </h:form>

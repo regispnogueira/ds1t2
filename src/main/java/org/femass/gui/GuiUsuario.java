@@ -8,7 +8,11 @@ package org.femass.gui;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.swing.JOptionPane;
 import org.femass.dao.FornecedorDao;
 import org.femass.dao.UsuarioDao;
 import org.femass.model.Fornecedor;
@@ -25,6 +29,7 @@ public class GuiUsuario implements Serializable {
     private Boolean alterando;
     private Fornecedor fornecedor;
     private Usuario usuario;
+    private List<Usuario> usuarios;
     @EJB
     private FornecedorDao fornecedorDao;
     @EJB
@@ -34,10 +39,30 @@ public class GuiUsuario implements Serializable {
      * Creates a new instance of GuiUsuario
      */
     public GuiUsuario() {
+     
     }
 
+    public String login(){
+        usuario = new Usuario();
+        usuarios = usuarioDao.getUsuarios();
+        return "Login";
+    }
+    
+    public String logar(){
+        usuario = usuarioDao.getUsuario(usuario.getEmail(), usuario.getSenha());
+        if (usuario == null) {
+            usuario = new Usuario();
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário não encontrado!","Erro no Login!"));
+            return null;
+        } else {
+            return "LstAnuncio";
+        }
+    }  
+     
+    
     public String cadastrar(){
         usuario = new Usuario();
+        usuarios = usuarioDao.getUsuarios();
         alterando = false;
         return "CadUsuario";
     }
@@ -55,10 +80,16 @@ public class GuiUsuario implements Serializable {
     
     public String gravar(){
         alterando = false;    
+        for (Usuario u: usuarios) {
+            if (u.equals(usuario)){
+                JOptionPane.showMessageDialog(null, "Usuário já cadastrado!");
+                return "CadUsuario";
+            }
+        }
         fornecedor = new Fornecedor();
-        usuario = new Usuario();
         fornecedor.setUsuario(usuario);
         usuarioDao.gravar(usuario);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("fornecedor", fornecedor);
         return "CadFornecedor";
     }
 
@@ -69,5 +100,7 @@ public class GuiUsuario implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+    
+    
     
 }

@@ -12,70 +12,75 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
-import org.femass.dao.BairroDao;
+import org.femass.dao.AnuncioDao;
 import org.femass.dao.FornecedorDao;
+import org.femass.dao.SubcategoriaDao;
 import org.femass.dao.UsuarioDao;
-import org.femass.model.Bairro;
+import org.femass.model.Anuncio;
 import org.femass.model.Fornecedor;
+import org.femass.model.Subcategoria;
 import org.femass.model.Usuario;
 
 /**
  *
  * @author Régis
  */
-@Named(value = "guiFornecedor")
+@Named(value = "guiAnuncio")
 @SessionScoped
-public class GuiFornecedor implements Serializable {
+public class GuiAnuncio implements Serializable {
 
     private Boolean alterando;
+    private Anuncio anuncio;
+    private List<Anuncio> anuncios;
     private Fornecedor fornecedor;
+    private List<Subcategoria> subcategorias;
+    private Long idSubcategoria;
     private Long idUsuario;
-    private static List<Bairro> bairros;
-    private Long idBairro;
     private Usuario usuario;
+    @EJB
+    private SubcategoriaDao subcategoriaDao;
+    @EJB
+    private AnuncioDao anuncioDao;
     @EJB
     private FornecedorDao fornecedorDao;
     @EJB
     private UsuarioDao usuarioDao;
-    @EJB
-    private BairroDao bairroDao;
-    
+        
     /**
      * Creates a new instance of GuiUsuario
      */
-    public GuiFornecedor() {
+    public GuiAnuncio() {
        
     }
 
     public String cadastrar(){
-        fornecedor = new Fornecedor();
+        anuncio = new Anuncio();
         alterando = false;
-        bairros = bairroDao.getBairros();
-        return "cadFornecedor";
+        return "cadAnuncio";
     }
     
-    public String alterar(Fornecedor _fornecedor){
-        this.fornecedor = _fornecedor;
-        this.idUsuario = fornecedor.getUsuario().getId();
+    public String alterar(Anuncio _anuncio){
+        this.anuncio = _anuncio;
         alterando = true;
-        return "cadFornecedor";
+        return "cadAnuncio";
     }
     
-    public String deletar(Fornecedor _fornecedor) {
-        usuarioDao.deletar(_fornecedor.getUsuario());
-        fornecedorDao.deletar(_fornecedor);
-        return "cadFornecedor";
+    public String deletar(Anuncio _anuncio) {
+        anuncioDao.deletar(_anuncio);
+        return "LstAnuncio";
     }
     
     @PostConstruct
     public void abrirTela(){
         fornecedor = (Fornecedor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("fornecedor");
+        anuncios = anuncioDao.getAnuncios();
+        subcategorias = subcategoriaDao.getSubcategorias();
     }
     
     public String gravar(){
-        fornecedorDao.gravar(fornecedor);
+        anuncioDao.gravar(anuncio);
         
-        return "CadUsuario";
+        return "LstAnuncio";
     }
 
     public Fornecedor getFornecedor() {
@@ -94,21 +99,33 @@ public class GuiFornecedor implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public List<Bairro> getBairros() {
-        bairros = bairroDao.getBairros();
-        return bairros;
+    public Anuncio getAnuncio() {
+        return anuncio;
     }
 
-    public void setBairros(List<Bairro> bairros) {
-        this.bairros = bairros;
+    public void setAnuncio(Anuncio anuncio) {
+        this.anuncio = anuncio;
     }
 
-    public Long getIdBairro() {
-        return idBairro;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setIdBairro(Long idBairro) {
-        this.idBairro = idBairro;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
-   
+
+    public Long getIdSubcategoria() {
+        return idSubcategoria;
+    }
+
+    public void setIdSubcategoria(Long idSubcategoria) {
+        this.idSubcategoria = idSubcategoria;
+    }
+    
+    public List<Subcategoria> getSubcategorias(){
+        subcategorias = subcategoriaDao.getSubcategorias();
+        return subcategorias;
+    }
+     
 }

@@ -59,6 +59,12 @@
             <artifactId>primefaces</artifactId>
             <version>8.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.primefaces.themes/all-themes -->
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>all-themes</artifactId>
+            <version>1.0.10</version>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.webjars/font-awesome -->
         <dependency>
@@ -72,8 +78,15 @@
             <version>42.2.16</version>
         </dependency>
     </dependencies>
-    
-     <build>
+    <repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
