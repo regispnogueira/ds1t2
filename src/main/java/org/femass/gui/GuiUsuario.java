@@ -12,7 +12,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.swing.JOptionPane;
 import org.femass.dao.FornecedorDao;
 import org.femass.dao.UsuarioDao;
 import org.femass.model.Fornecedor;
@@ -29,6 +28,7 @@ public class GuiUsuario implements Serializable {
     private Boolean alterando;
     private Fornecedor fornecedor;
     private Usuario usuario;
+    private Usuario _usuario;
     private List<Usuario> usuarios;
     @EJB
     private FornecedorDao fornecedorDao;
@@ -49,12 +49,14 @@ public class GuiUsuario implements Serializable {
     }
     
     public String logar(){
-        usuario = usuarioDao.getUsuario(usuario.getEmail(), usuario.getSenha());
+        usuario = usuarioDao.getUsuarioLogin(usuario.getEmail(), usuario.getSenha());
         if (usuario == null) {
             usuario = new Usuario();
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário não encontrado!","Erro no Login!"));
             return null;
         } else {
+            fornecedor = fornecedorDao.getFornecedorUsuario(usuario.getId());
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("fornecedor", fornecedor);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usuario);
             return "LstAnuncio";
         }
@@ -80,18 +82,17 @@ public class GuiUsuario implements Serializable {
     }
     
     public String gravar(){
-        alterando = false;    
-        for (Usuario u: usuarios) {
-            if (u.equals(usuario)){
-                JOptionPane.showMessageDialog(null, "Usuário já cadastrado!");
-                return "CadUsuario";
-            }
+        _usuario = usuarioDao.getUsuario(usuario.getEmail());
+        if (_usuario!=null){
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário já cadastrado!","Erro no Cadastro!"));
+            return "CadUsuario";
+        } else {
+            fornecedor = new Fornecedor();
+            fornecedor.setUsuario(usuario);
+            usuarioDao.gravar(usuario);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("fornecedor", fornecedor);
+            return "CadFornecedor";
         }
-        fornecedor = new Fornecedor();
-        fornecedor.setUsuario(usuario);
-        usuarioDao.gravar(usuario);
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("fornecedor", fornecedor);
-        return "CadFornecedor";
     }
 
     public Usuario getUsuario() {

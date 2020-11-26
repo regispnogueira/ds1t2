@@ -14,14 +14,23 @@
                 <p:inputText value="#{guiAnuncio.anuncio.nome}" />
                 <p:outputLabel value="Descrição*" />
                 <p:inputText value="#{guiAnuncio.anuncio.descricao}" />
-                <p:inputMask value="#{guiAnuncio.anuncio.valor}" mask="R$ 999.999.999,99" />
+                <p:outputLabel value="Valor(R$)*" />
+                <p:inputNumber value="#{guiAnuncio.anuncio.valor}" />
                 <p:outputLabel value="Categoria" />
                 <p:selectOneMenu value="#{guiAnuncio.idSubcategoria}" style="width:250px"  >
                     <f:selectItems value="#{guiAnuncio.subcategorias}" var="s" itemLabel="#{s.nome}" itemValue="#{s.id}"/>
                 </p:selectOneMenu>
                 <p:outputLabel value="Validade*" />
-                <p:inputMask value="#{guiAnuncio.anuncio.validade}" mask="99/99/9999" />
-                                               
+                <p:inputMask value="#{guiAnuncio.anuncio.validade}" mask="99/99/9999" converter="localDateFacesConverter" />
+                <p:outputLabel value="Estado*" />
+                <p:selectOneMenu value="#{guiAnuncio.anuncio.estado}" style="width:250px"  >
+                    <f:selectItem itemLabel="Select One" itemValue="" />
+                    <f:selectItem itemLabel="NOVO" itemValue="#{guiAnuncio.anuncio.setEstado(NOVO)}" />
+                    <f:selectItem itemLabel="USADO" itemValue="#{guiAnuncio.anuncio.setEstado(USADO)}" />
+                </p:selectOneMenu>
+                <p:outputLabel value="Foto*" />
+                <p:fileUpload value="#{guiAnuncio.file}" mode="simple" skinSimple="true"/>
+                <br />                               
             </p:panelGrid>
             <p:commandButton value="Gravar" action="#{guiAnuncio.gravar()}" ajax="false" />
         </h:form>

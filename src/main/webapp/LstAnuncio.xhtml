@@ -13,7 +13,7 @@
                 <p:column headerText="Nome">
                     <p:outputLabel value="#{a.nome}" />
                 </p:column>
-                <p:column headerText="Preço" filterBy="#{a.nome}">
+                <p:column headerText="Preço" >
                     <p:commandLink value="#{a.valor}"  action="#{guiAnuncio.alterar(a)}" ajax="false"/>
                 </p:column>
                 <p:column headerText="Validade">

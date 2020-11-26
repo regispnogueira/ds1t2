@@ -6,6 +6,7 @@
 package org.femass.model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,8 +35,8 @@ public class Fornecedor implements Serializable {
     private String url;
     private String facebook;
     private String instagram;
+    @Column(columnDefinition = "text")
     private String foto;
-    private byte[] fotobyte;
     @ManyToOne
     private Usuario usuario;
 
@@ -160,19 +161,4 @@ public class Fornecedor implements Serializable {
     public void setFoto(String foto) {
         this.foto = foto;
     }
-
-    public byte[] getFotobyte() {
-        return fotobyte;
-    }
-
-    public void setFotobyte(byte[] fotobyte) {
-        this.fotobyte = fotobyte;
-    }
-    
-    public void upload(){
-        this.foto = Base64.toBase64String(this.fotobyte);
-        
-    }
-    
-    
 }

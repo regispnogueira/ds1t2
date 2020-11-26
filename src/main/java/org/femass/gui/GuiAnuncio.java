@@ -8,6 +8,7 @@ package org.femass.gui;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Base64;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -20,6 +21,7 @@ import org.femass.model.Anuncio;
 import org.femass.model.Fornecedor;
 import org.femass.model.Subcategoria;
 import org.femass.model.Usuario;
+import org.primefaces.model.file.UploadedFile;
 
 /**
  *
@@ -32,12 +34,14 @@ public class GuiAnuncio implements Serializable {
     private Boolean alterando;
     private Anuncio anuncio;
     private List<Anuncio> anuncios;
+    private List<Anuncio> anunciosaprovados;
     private List<Anuncio> anunciosfornecedor;
     private Fornecedor fornecedor;
     private List<Subcategoria> subcategorias;
     private Long idSubcategoria;
     private Long idUsuario;
     private Usuario usuario;
+    private UploadedFile file;
     @EJB
     private SubcategoriaDao subcategoriaDao;
     @EJB
@@ -56,8 +60,8 @@ public class GuiAnuncio implements Serializable {
 
     public String cadastrar(){
         anuncio = new Anuncio();
-        alterando = false;
-        return "cadAnuncio";
+        anuncio.setFornecedor(fornecedor);
+        return "CadAnuncio";
     }
     
     public String alterar(Anuncio _anuncio){
@@ -75,13 +79,17 @@ public class GuiAnuncio implements Serializable {
     public void abrirTela(){
         fornecedor = (Fornecedor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("fornecedor");
         usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        //anunciosfornecedor = anuncioDao.getAnunciosFornecedor(usuario.getId());
+        if(!(usuario==null))
+            anunciosfornecedor = anuncioDao.getAnunciosFornecedor(usuario.getId());
         anuncios = anuncioDao.getAnuncios();
+        anunciosaprovados = anuncioDao.getAnunciosAprovados();
         subcategorias = subcategoriaDao.getSubcategorias();
     }
     
     public String gravar(){
-        anuncio.setFornecedor(fornecedor);
+        byte[] content = file.getContent();
+        String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
+        anuncio.setFoto(resp);
         anuncioDao.gravar(anuncio);
         
         return "LstAnuncio";
@@ -146,6 +154,22 @@ public class GuiAnuncio implements Serializable {
 
     public void setAnunciosfornecedor(List<Anuncio> anunciosfornecedor) {
         this.anunciosfornecedor = anunciosfornecedor;
+    }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
+    public List<Anuncio> getAnunciosaprovados() {
+        return anunciosaprovados;
+    }
+
+    public void setAnunciosaprovados(List<Anuncio> anunciosaprovados) {
+        this.anunciosaprovados = anunciosaprovados;
     }
      
 }

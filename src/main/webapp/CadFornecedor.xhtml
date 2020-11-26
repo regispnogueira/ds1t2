@@ -29,10 +29,9 @@
                 <p:outputLabel value="Instagram" />
                 <p:inputText value="#{guiFornecedor.fornecedor.instagram}" />
                 <p:outputLabel value="Foto (Fachada ou Logo)*" />
-                <p:fileUpload label="Foto" value="#{guiFornecedor.fornecedor.fotobyte}" mode="simple" skinSimple="true" />
+                <p:fileUpload value="#{guiFornecedor.file}" mode="simple" skinSimple="true"/>
                 <br />
-                <p:commandButton value="Carregar" ajax="false" action="#{guiFornecedor.fornecedor.upload}" />
-            </p:panelGrid>
+              </p:panelGrid>
             <p:commandButton value="Gravar" action="#{guiFornecedor.gravar()}" ajax="false" />
         </h:form>
             

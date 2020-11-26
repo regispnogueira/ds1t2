@@ -40,8 +40,13 @@ public class AnuncioDao {
         Query q = em.createQuery("select a from Anuncio a order by a.nome");
         return q.getResultList();
     }
+    public List<Anuncio> getAnunciosAprovados() {
+        Query q = em.createQuery("select a from Anuncio a where a.aprovacao is not null order by a.nome");
+        return q.getResultList();
+    }
     public List<Anuncio> getAnunciosFornecedor(Long idUsuario) {
-        Query q = em.createQuery("select a from Anuncio a where a.fornecedor.usuario = %idUsuario");
+        Query q = em.createQuery("select a from Anuncio a where a.fornecedor.usuario = :idUsuario");
+        q.setParameter("idUsuario", idUsuario);
         return q.getResultList();
     }
            

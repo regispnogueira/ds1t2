@@ -42,10 +42,19 @@ public class UsuarioDao {
         return q.getResultList();
     }
     
-    public Usuario getUsuario(String email, String senha) {
+    public Usuario getUsuarioLogin(String email, String senha) {
 
       try {
         Usuario usuario = (Usuario) em.createQuery("SELECT u from Usuario u where u.email = :email and u.senha = :senha").setParameter("email", email).setParameter("senha", senha).getSingleResult();
+        return usuario;
+      } catch (NoResultException e) {
+            return null;
+      }
+    }
+    public Usuario getUsuario(String email) {
+
+      try {
+        Usuario usuario = (Usuario) em.createQuery("SELECT u from Usuario u where u.email = :email").setParameter("email", email).getSingleResult();
         return usuario;
       } catch (NoResultException e) {
             return null;

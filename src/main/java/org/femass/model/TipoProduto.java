@@ -10,5 +10,5 @@ package org.femass.model;
  * @author Régis
  */
 public enum TipoProduto {
-    
+    NOVO,USADO;
 }

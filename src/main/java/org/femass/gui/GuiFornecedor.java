@@ -8,6 +8,7 @@ package org.femass.gui;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Base64;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -18,6 +19,9 @@ import org.femass.dao.UsuarioDao;
 import org.femass.model.Bairro;
 import org.femass.model.Fornecedor;
 import org.femass.model.Usuario;
+import static org.primefaces.behavior.validate.ClientValidator.PropertyKeys.event;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.file.UploadedFile;
 
 /**
  *
@@ -33,6 +37,7 @@ public class GuiFornecedor implements Serializable {
     private static List<Bairro> bairros;
     private Long idBairro;
     private Usuario usuario;
+    private UploadedFile file;
     @EJB
     private FornecedorDao fornecedorDao;
     @EJB
@@ -73,9 +78,12 @@ public class GuiFornecedor implements Serializable {
     }
     
     public String gravar(){
+        byte[] content = file.getContent();
+        String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
+        fornecedor.setFoto(resp);
         fornecedorDao.gravar(fornecedor);
         
-        return "CadUsuario";
+        return "LstAnuncio";
     }
 
     public Fornecedor getFornecedor() {
@@ -110,5 +118,15 @@ public class GuiFornecedor implements Serializable {
     public void setIdBairro(Long idBairro) {
         this.idBairro = idBairro;
     }
-   
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+    
+    
+    
 }
