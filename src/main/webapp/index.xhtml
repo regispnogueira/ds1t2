@@ -19,8 +19,8 @@
                         <p:dataGrid var="a" value="#{guiAnuncio.anuncios}" columns="4" layout="grid" rows="8" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="6,12,16" >
                             <p:panel header="#{a.subcategoria}" style="text-align:center">
                                 <h:panelGrid columns="1" style="width:100%">
-                                    <p:graphicImage value="data:image/jpeg;base64,#{a.foto}" stream="false" style="max-width: 300px; max-height: 300px;" /> 
-                                    <h:outputText value="#{a.nome}" />
+                                    <h:graphicImage value="#{a.foto}" width="100px" /> 
+                                    <p:commandLink value="#{a.nome}" action="CadAnuncio" />
                                 </h:panelGrid>
                              </p:panel>    
                         </p:dataGrid>

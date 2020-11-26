@@ -24,6 +24,7 @@ public class FornecedorDao {
     
     @PersistenceContext
     EntityManager em;
+    private Fornecedor fornecedor;
     
     
     public void gravar(Fornecedor fornecedor) {
@@ -44,8 +45,10 @@ public class FornecedorDao {
     }
     
     public Fornecedor getFornecedorUsuario(Long idUsuario){
+        
         Query q = em.createQuery("select f from Fornecedor f where f.usuario.id = :idUsuario").setParameter("idUsuario", idUsuario);
-        return ((Fornecedor)q.getSingleResult());
+        fornecedor = ((Fornecedor)q.getSingleResult());
+        return fornecedor;
     }
            
 }

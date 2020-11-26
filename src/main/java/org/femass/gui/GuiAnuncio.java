@@ -61,6 +61,8 @@ public class GuiAnuncio implements Serializable {
     }
 
     public String cadastrar(){
+        fornecedor = (Fornecedor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("fornecedor");
+        usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         anuncio = new Anuncio();
         anuncio.setFornecedor(fornecedor);
         return "CadAnuncio";
@@ -79,8 +81,6 @@ public class GuiAnuncio implements Serializable {
     
     @PostConstruct
     public void abrirTela(){
-        fornecedor = (Fornecedor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("fornecedor");
-        usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         if(!(usuario==null))
             anunciosfornecedor = anuncioDao.getAnunciosFornecedor(usuario.getId());
         anuncios = anuncioDao.getAnuncios();
