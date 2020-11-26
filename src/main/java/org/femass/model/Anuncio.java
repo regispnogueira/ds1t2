@@ -39,7 +39,7 @@ public class Anuncio implements Serializable {
     private String foto;
     @OneToOne
     private Subcategoria subcategoria;
-    private TipoProduto estado;
+    private TipoProduto tipoproduto;
     
     
 
@@ -140,12 +140,12 @@ public class Anuncio implements Serializable {
         this.subcategoria = subcategoria;
     }
 
-    public TipoProduto getEstado() {
-        return estado;
+    public TipoProduto getTipoproduto() {
+        return tipoproduto;
     }
 
-    public void setEstado(TipoProduto estado) {
-        this.estado = estado;
+    public void setTipoproduto(TipoProduto tipoproduto) {
+        this.tipoproduto = tipoproduto;
     }
 
     public String getFoto() {

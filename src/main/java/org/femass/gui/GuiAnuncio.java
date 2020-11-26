@@ -20,6 +20,7 @@ import org.femass.dao.UsuarioDao;
 import org.femass.model.Anuncio;
 import org.femass.model.Fornecedor;
 import org.femass.model.Subcategoria;
+import org.femass.model.TipoProduto;
 import org.femass.model.Usuario;
 import org.primefaces.model.file.UploadedFile;
 
@@ -33,6 +34,7 @@ public class GuiAnuncio implements Serializable {
 
     private Boolean alterando;
     private Anuncio anuncio;
+    private TipoProduto[] tiposprodutos;
     private List<Anuncio> anuncios;
     private List<Anuncio> anunciosaprovados;
     private List<Anuncio> anunciosfornecedor;
@@ -171,5 +173,16 @@ public class GuiAnuncio implements Serializable {
     public void setAnunciosaprovados(List<Anuncio> anunciosaprovados) {
         this.anunciosaprovados = anunciosaprovados;
     }
+
+    public TipoProduto[] getTiposprodutos() {
+        return TipoProduto.values();
+    }
+
+    public void setTiposprodutos(TipoProduto[] tiposprodutos) {
+        this.tiposprodutos = tiposprodutos;
+    }
+
+    
      
+    
 }

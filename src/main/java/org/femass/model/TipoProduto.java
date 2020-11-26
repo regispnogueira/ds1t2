@@ -11,4 +11,8 @@ package org.femass.model;
  */
 public enum TipoProduto {
     NOVO,USADO;
+    
+    
+    
 }
+
