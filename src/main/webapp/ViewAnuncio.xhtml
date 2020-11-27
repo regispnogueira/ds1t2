@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Anuncio</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="content">
+                <h:form >
+                    <p:panelGrid columns="2" >
+                        <h:graphicImage value="#{guiAdm.anuncio.foto}" width="500px" />
+                        <p:panelGrid columns="1" >
+                            <p:outputLabel value="#{guiAdm.anuncio.nome}" />
+                            <p:outputLabel value="#{guiAdm.anuncio.descricao}"  />
+                            <p:outputLabel value="#{guiAdm.anuncio.valor}"  />
+                            <p:outputLabel value="#{guiAdm.anuncio.fornecedor.nome}"  />
+                            <p:outputLabel value="#{guiAdm.anuncio.fornecedor.telefone}"  />
+                            <p:outputLabel value="#{guiAdm.anuncio.fornecedor.whatsapp}"  />
+                            <p:outputLabel value="#{guiAdm.anuncio.fornecedor.url}"  />
+                            <p:outputLabel value="#{guiAdm.anuncio.fornecedor.instagram}"  />
+                            <p:outputLabel value="#{guiAdm.anuncio.fornecedor.facebook}"  />
+                        </p:panelGrid>
+                    </p:panelGrid>
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
+

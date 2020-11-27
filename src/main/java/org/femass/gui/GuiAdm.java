@@ -327,5 +327,10 @@ public class GuiAdm implements Serializable {
         this.search = search;
     }
     
+    public String visualizarAnuncio(Anuncio _anuncio){
+        anuncio = _anuncio;
+                
+        return "ViewAnuncio";
+    }
     
 }

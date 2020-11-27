@@ -51,7 +51,7 @@ public class AnuncioDao {
     }
     public List<Anuncio> getAnunciosBusca(String search){
         Query q = em.createQuery("select a from Anuncio a where a.descricao like :search or a.nome like :search");
-        q.setParameter("search", search);
+        q.setParameter("search", "%" + search + "%");
         return q.getResultList();
     }       
 }
