@@ -11,28 +11,28 @@
         <h:form enctype="multipart/form-data">
             <p:panelGrid columns="2" >
                 <p:outputLabel value="Nome*" />
-                <p:inputText value="#{guiFornecedor.fornecedor.nome}" />
+                <p:inputText value="#{guiAdm.fornecedor.nome}" />
                 <p:outputLabel value="Telefone*" />
-                <p:inputMask value="#{guiFornecedor.fornecedor.telefone}" mask="(99)99999-9999" />
+                <p:inputMask value="#{guiAdm.fornecedor.telefone}" mask="(99)99999-9999" />
                 <p:outputLabel value="Endereço*" />
-                <p:inputText value="#{guiFornecedor.fornecedor.endereco}" />
+                <p:inputText value="#{guiAdm.fornecedor.endereco}" />
                 <p:outputLabel value="Bairro" />
-                <p:selectOneMenu value="#{guiFornecedor.idBairro}" style="width:250px"  >
-                    <f:selectItems value="#{guiFornecedor.bairros}" var="b" itemLabel="#{b.nome}" itemValue="#{b.id}"/>
+                <p:selectOneMenu value="#{guiAdm.idBairro}" style="width:250px"  >
+                    <f:selectItems value="#{guiAdm.bairros}" var="b" itemLabel="#{b.nome}" itemValue="#{b.id}"/>
                 </p:selectOneMenu>
                 <p:outputLabel value="CEP*" />
-                <p:inputMask value="#{guiFornecedor.fornecedor.cep}" mask="99999-999" />
+                <p:inputMask value="#{guiAdm.fornecedor.cep}" mask="99999-999" />
                 <p:outputLabel value="URL" />
-                <p:inputText value="#{guiFornecedor.fornecedor.url}" />
+                <p:inputText value="#{guiAdm.fornecedor.url}" />
                 <p:outputLabel value="Facebook" />
-                <p:inputText value="#{guiFornecedor.fornecedor.facebook}" />
+                <p:inputText value="#{guiAdm.fornecedor.facebook}" />
                 <p:outputLabel value="Instagram" />
-                <p:inputText value="#{guiFornecedor.fornecedor.instagram}" />
+                <p:inputText value="#{guiAdm.fornecedor.instagram}" />
                 <p:outputLabel value="Foto (Fachada ou Logo)*" />
-                <p:fileUpload value="#{guiFornecedor.file}" mode="simple" skinSimple="true"/>
+                <p:fileUpload value="#{guiAdm.fileFornecedor}" mode="simple" skinSimple="true"/>
                 <br />
               </p:panelGrid>
-            <p:commandButton value="Gravar" action="#{guiFornecedor.gravar()}" ajax="false" />
+            <p:commandButton value="Gravar" action="#{guiAdm.gravarFornecedor()}" ajax="false" />
         </h:form>
             
         

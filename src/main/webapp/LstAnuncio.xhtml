@@ -8,19 +8,19 @@
     </h:head>
     <h:body>
         <h:form>
-            <p:commandButton value="Incluir" action="#{guiAnuncio.cadastrar()}" ajax="false" icon="fa fa-align-justify" />
-            <p:dataTable value="#{guiAnuncio.anunciosfornecedor}" var="a" >
+            <p:commandButton value="Incluir" action="#{guiAdm.cadastrarAnuncio()}" ajax="false" icon="fa fa-align-justify" />
+            <p:dataTable value="#{guiAdm.anunciosfornecedor}" var="a" >
                 <p:column headerText="Nome">
                     <p:outputLabel value="#{a.nome}" />
                 </p:column>
                 <p:column headerText="Preço" >
-                    <p:commandLink value="#{a.valor}"  action="#{guiAnuncio.alterar(a)}" ajax="false"/>
+                    <p:commandLink value="#{a.valor}"  action="#{guiAdm.alterarAnuncio(a)}" ajax="false"/>
                 </p:column>
                 <p:column headerText="Validade">
                     <p:commandLink value="#{a.validade}" />
                 </p:column>
                 <p:column >
-                    <p:commandButton  id="cmdAlterar" action="#{guiAnuncio.alterar(a)}" ajax="false" icon="fa fa-edit" >
+                    <p:commandButton  id="cmdAlterar" action="#{guiAdm.alterarAnuncio(a)}" ajax="false" icon="fa fa-edit" >
                         <p:tooltip id="toolTipAlterar" for="cmdAlterar" value="Altera um anuncio" position="top"/>
                     </p:commandButton>
                 </p:column>

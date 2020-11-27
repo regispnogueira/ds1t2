@@ -11,11 +11,11 @@
             <p:messages id="messagesLogin"/>
             <p:panelGrid columns="2">
                 <p:outputLabel value="E-mail" />
-                <p:inputText value="#{guiUsuario.usuario.email}" required="true" requiredMessage="Campo E-mail é obrigatório" />
+                <p:inputText value="#{guiAdm.usuario.email}" required="true" requiredMessage="Campo E-mail é obrigatório" />
                 <p:outputLabel value="Senha" />
-                <p:password value="#{guiUsuario.usuario.senha}" required="true" requiredMessage="Campo Senha é obrigatório" />
+                <p:password value="#{guiAdm.usuario.senha}" required="true" requiredMessage="Campo Senha é obrigatório" />
             </p:panelGrid>
-            <p:commandButton value="Cadastrar" action="#{guiUsuario.gravar()}" ajax="false" update="messagesLogin"/>
+            <p:commandButton value="Cadastrar" action="#{guiAdm.gravarUsuario()}" ajax="false" update="messagesLogin"/>
         </h:form>
     </h:body>
 </html>

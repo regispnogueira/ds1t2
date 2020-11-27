@@ -11,26 +11,26 @@
         <h:form enctype="multipart/form-data">
             <p:panelGrid columns="2" >
                 <p:outputLabel value="Nome*" />
-                <p:inputText value="#{guiAnuncio.anuncio.nome}" />
+                <p:inputText value="#{guiAdm.anuncio.nome}" />
                 <p:outputLabel value="Descrição*" />
-                <p:inputText value="#{guiAnuncio.anuncio.descricao}" />
+                <p:inputText value="#{guiAdm.anuncio.descricao}" />
                 <p:outputLabel value="Valor(R$)*" />
-                <p:inputNumber value="#{guiAnuncio.anuncio.valor}" />
+                <p:inputNumber value="#{guiAdm.anuncio.valor}" />
                 <p:outputLabel value="Categoria" />
-                <p:selectOneMenu value="#{guiAnuncio.idSubcategoria}" style="width:250px"  >
-                    <f:selectItems value="#{guiAnuncio.subcategorias}" var="s" itemLabel="#{s.nome}" itemValue="#{s.id}"/>
+                <p:selectOneMenu value="#{guiAdm.idSubcategoria}" style="width:250px"  >
+                    <f:selectItems value="#{guiAdm.subcategorias}" var="s" itemLabel="#{s.nome}" itemValue="#{s.id}"/>
                 </p:selectOneMenu>
                 <p:outputLabel value="Validade*" />
-                <p:inputMask value="#{guiAnuncio.anuncio.validade}" mask="99/99/9999" converter="localDateFacesConverter" />
+                <p:inputMask value="#{guiAdm.anuncio.validade}" mask="99/99/9999" converter="localDateFacesConverter" />
                 <p:outputLabel value="Estado*" />
-                <p:selectOneMenu value="#{guiAnuncio.anuncio.tipoproduto}" style="width:250px"  >
-                    <f:selectItems value="#{guiAnuncio.tiposprodutos}" />
+                <p:selectOneMenu value="#{guiAdm.anuncio.tipoproduto}" style="width:250px"  >
+                    <f:selectItems value="#{guiAdm.tiposprodutos}" />
                 </p:selectOneMenu>
                 <p:outputLabel value="Foto*" />
-                <p:fileUpload value="#{guiAnuncio.file}" mode="simple" skinSimple="true"/>
+                <p:fileUpload value="#{guiAdm.fileAnuncio}" mode="simple" skinSimple="true"/>
                 <br />                               
             </p:panelGrid>
-            <p:commandButton value="Gravar" action="#{guiAnuncio.gravar()}" ajax="false" />
+            <p:commandButton value="Gravar" action="#{guiAdm.gravarAnuncio()}" ajax="false" />
         </h:form>
             
         

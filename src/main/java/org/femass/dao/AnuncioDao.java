@@ -37,7 +37,7 @@ public class AnuncioDao {
     }
     
     public List<Anuncio> getAnuncios() {
-        Query q = em.createQuery("select a from Anuncio a order by a.nome");
+        Query q = em.createQuery("select a from Anuncio a order by a.id");
         return q.getResultList();
     }
     public List<Anuncio> getAnunciosAprovados() {
@@ -45,9 +45,13 @@ public class AnuncioDao {
         return q.getResultList();
     }
     public List<Anuncio> getAnunciosFornecedor(Long idUsuario) {
-        Query q = em.createQuery("select a from Anuncio a where a.fornecedor.usuario = :idUsuario");
+        Query q = em.createQuery("select a from Anuncio a where a.fornecedor.usuario.id = :idUsuario");
         q.setParameter("idUsuario", idUsuario);
         return q.getResultList();
     }
-           
+    public List<Anuncio> getAnunciosBusca(String search){
+        Query q = em.createQuery("select a from Anuncio a where a.descricao like :search or a.nome like :search");
+        q.setParameter("search", search);
+        return q.getResultList();
+    }       
 }
