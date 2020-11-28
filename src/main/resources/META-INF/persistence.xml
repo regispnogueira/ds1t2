@@ -9,6 +9,7 @@
     <class>org.femass.model.Fornecedor</class>
     <class>org.femass.model.Subcategoria</class>
     <class>org.femass.model.Usuario</class>
+    <class>org.femass.model.FotoAnuncio</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

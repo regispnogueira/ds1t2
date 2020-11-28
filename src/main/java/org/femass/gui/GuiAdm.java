@@ -17,14 +17,17 @@ import javax.faces.context.FacesContext;
 import org.femass.dao.AnuncioDao;
 import org.femass.dao.BairroDao;
 import org.femass.dao.FornecedorDao;
+import org.femass.dao.FotoAnuncioDao;
 import org.femass.dao.SubcategoriaDao;
 import org.femass.dao.UsuarioDao;
 import org.femass.model.Anuncio;
 import org.femass.model.Bairro;
 import org.femass.model.Fornecedor;
+import org.femass.model.FotoAnuncio;
 import org.femass.model.Subcategoria;
 import org.femass.model.TipoProduto;
 import org.femass.model.Usuario;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
 
 /**
@@ -37,15 +40,17 @@ public class GuiAdm implements Serializable {
 
     private Boolean alterando;
     private String search;
-    
+        
     private Fornecedor fornecedor;
     private Usuario usuario;
     private Usuario _usuario;
     private Anuncio anuncio;
+    private FotoAnuncio fotoanuncio;
     
     private Long idSubcategoria;
     private Long idUsuario;
     private Long idBairro;
+    
     private UploadedFile filefornecedor;
     private UploadedFile fileanuncio;
     
@@ -68,6 +73,8 @@ public class GuiAdm implements Serializable {
     private SubcategoriaDao subcategoriaDao;
     @EJB
     private AnuncioDao anuncioDao;
+    @EJB
+    private FotoAnuncioDao fotoanuncioDao;
         
     /**
      * Creates a new instance of GuiUsuario
@@ -238,7 +245,9 @@ public class GuiAdm implements Serializable {
     public String gravarAnuncio(){
         byte[] content = fileanuncio.getContent();
         String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
-        anuncio.setFoto(resp);
+        fotoanuncio.setFoto(resp);
+        fotoanuncioDao.gravar(fotoanuncio);
+        anuncio.salvarFoto(fotoanuncio);
         anuncioDao.gravar(anuncio);
         anunciosfornecedor = anuncioDao.getAnunciosFornecedor(usuario.getId()); 
         
@@ -280,14 +289,6 @@ public class GuiAdm implements Serializable {
 
     public void setAnunciosfornecedor(List<Anuncio> anunciosfornecedor) {
         this.anunciosfornecedor = anunciosfornecedor;
-    }
-
-    public UploadedFile getFileAnuncio() {
-        return fileanuncio;
-    }
-
-    public void setFileAnuncio(UploadedFile file) {
-        this.fileanuncio = file;
     }
 
     public List<Anuncio> getAnunciosaprovados() {
@@ -333,4 +334,15 @@ public class GuiAdm implements Serializable {
         return "ViewAnuncio";
     }
     
+    public UploadedFile getFileAnuncio() {
+        return fileanuncio;
+    }
+
+    public void setFileAnuncio(UploadedFile file) {
+        this.fileanuncio = file;
+    }
+    
+    public void fileUploadListener(FileUploadEvent e) {
+        this.fileanuncio = e.getFile();
+    }
 }

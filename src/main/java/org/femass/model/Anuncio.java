@@ -7,12 +7,13 @@ package org.femass.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import javax.persistence.Column;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -35,8 +36,8 @@ public class Anuncio implements Serializable {
     private String descricao;
     private Double valor;
     private LocalDate validade;
-    @Column(columnDefinition = "text")
-    private String foto;
+    @OneToMany
+    private List<FotoAnuncio> fotos;
     @OneToOne
     private Subcategoria subcategoria;
     private TipoProduto tipoproduto;
@@ -148,12 +149,16 @@ public class Anuncio implements Serializable {
         this.tipoproduto = tipoproduto;
     }
 
-    public String getFoto() {
-        return foto;
+    public List<FotoAnuncio> getFotos() {
+        return fotos;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setFotos(List<FotoAnuncio> fotos) {
+        this.fotos = fotos;
+    }
+    
+    public void salvarFoto(FotoAnuncio foto){
+        fotos.add(foto);
     }
     
 }

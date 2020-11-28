@@ -15,7 +15,7 @@
                         <p:dataGrid var="a" value="#{guiAdm.anunciosbusca}" columns="10" layout="grid" rows="20"  >
                             <p:panel header="#{a.subcategoria}" style="text-align:center">
                                 <h:panelGrid columns="1" style="width:100%">
-                                    <h:graphicImage value="#{a.foto}" width="100px" /> 
+                                    <h:graphicImage value="#{a.fornecedor.foto}" width="100px" /> 
                                     <p:commandLink value="#{a.nome}" action="#{guiAdm.visualizarAnuncio(a)}" />
                                     <p:commandLink value="#{a.valor}" action="#{guiAdm.visualizarAnuncio(a)}" />
                                 </h:panelGrid>

@@ -12,7 +12,9 @@
             <ui:define name="content">
                 <h:form >
                     <p:panelGrid columns="2" >
-                        <h:graphicImage value="#{guiAdm.anuncio.foto}" width="500px" />
+                        <p:galleria value="#{guiAdm.anuncio.fotos}" var="image" panelWidth="500" panelHeight="313" showCaption="true">
+                            <p:graphicImage name="demo/images/nature/#{image}" alt="Image Description for #{image}" title="#{image}"/>
+                        </p:galleria>
                         <p:panelGrid columns="1" >
                             <p:outputLabel value="#{guiAdm.anuncio.nome}" />
                             <p:outputLabel value="#{guiAdm.anuncio.descricao}"  />

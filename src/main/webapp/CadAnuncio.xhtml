@@ -27,7 +27,10 @@
                     <f:selectItems value="#{guiAdm.tiposprodutos}" />
                 </p:selectOneMenu>
                 <p:outputLabel value="Foto*" />
-                <p:fileUpload value="#{guiAdm.fileAnuncio}" mode="simple" skinSimple="true"/>
+                <p:fileUpload value="#{guiAdm.anuncio.fotos}" fileUploadListener="#{guiAdm.fileUploadListener}" skinSimple="true" multiple="true" 
+                                allowTypes="/(\.|\/)(gif|jpe?g|png)$/" invalidFileMessage="São permitidas somente imagens (gif, jpeg, jpg e png)" 
+                                fileLimit="6" fileLimitMessage="Só é possível escolher 6 arquivos por anuncio." />
+                
                 <br />                               
             </p:panelGrid>
             <p:commandButton value="Gravar" action="#{guiAdm.gravarAnuncio()}" ajax="false" />

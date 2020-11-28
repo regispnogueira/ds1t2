@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-       <title>Login</title>
+        <title>Login</title>
     </h:head>
     <h:body>
         <ui:composition template="template.xhtml">
@@ -21,12 +21,12 @@
                     <p:commandButton value="Entrar" action="#{guiAdm.logarUsuario()}" ajax="false" update="messagesLogin" />
                     <br/>
                 </h:form>
+
+                <h:form>
+                    <p:commandLink value="Não tem uma conta ainda? Cadastre-se!" action="#{guiAdm.cadastrarUsuario()}" ajax="false"/>
+                </h:form>
             </ui:define>
         </ui:composition>
-        <h:form>
-            <p:commandLink value="Não tem uma conta ainda? Cadastre-se!" action="#{guiAdm.cadastrarUsuario()}" ajax="false"/>
-        </h:form>
-
     </h:body>
 </html>
 
