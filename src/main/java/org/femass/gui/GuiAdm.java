@@ -8,6 +8,8 @@ package org.femass.gui;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.time.LocalDate;
+import static java.time.temporal.TemporalQueries.localDate;
 import java.util.Base64;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -26,8 +28,8 @@ import org.femass.model.Fornecedor;
 import org.femass.model.FotoAnuncio;
 import org.femass.model.Subcategoria;
 import org.femass.model.TipoProduto;
+import org.femass.model.TipoUsuario;
 import org.femass.model.Usuario;
-import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
 
 /**
@@ -46,19 +48,32 @@ public class GuiAdm implements Serializable {
     private Usuario _usuario;
     private Anuncio anuncio;
     private FotoAnuncio fotoanuncio;
+    private FotoAnuncio fotoanuncio2;
+    private FotoAnuncio fotoanuncio3;
+    private FotoAnuncio fotoanuncio4;
+    private FotoAnuncio fotoanuncio5;
+    private FotoAnuncio fotoanuncio6;
     
     private Long idSubcategoria;
     private Long idUsuario;
     private Long idBairro;
+    private Long idAnuncio;
     
     private UploadedFile filefornecedor;
     private UploadedFile fileanuncio;
+    private UploadedFile fileanuncio2;
+    private UploadedFile fileanuncio3;
+    private UploadedFile fileanuncio4;
+    private UploadedFile fileanuncio5;
+    private UploadedFile fileanuncio6;
+    
     
     private TipoProduto[] tiposprodutos;
     private List<Anuncio> anuncios;
     private List<Anuncio> anunciosaprovados;
     private List<Anuncio> anunciosfornecedor;
     private List<Anuncio> anunciosbusca;
+    private List<Anuncio> anunciosaprovar;
     private List<Subcategoria> subcategorias;
     private List<Usuario> usuarios;
     private static List<Bairro> bairros;
@@ -85,8 +100,8 @@ public class GuiAdm implements Serializable {
 
     @PostConstruct
     public void abrirTela(){
-        
         anuncios = anuncioDao.getAnuncios();
+        anunciosaprovar = anuncioDao.getAnunciosAprovar();
         anunciosaprovados = anuncioDao.getAnunciosAprovados();
         subcategorias = subcategoriaDao.getSubcategorias();
     }
@@ -103,13 +118,17 @@ public class GuiAdm implements Serializable {
             usuario = new Usuario();
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário não encontrado!","Erro no Login!"));
             return null;
-        } else {
+        } else if(usuario.getTipousuario()==usuario.getTipousuario().FORNECEDOR){
             fornecedor = fornecedorDao.getFornecedorUsuario(usuario.getId());
             anunciosfornecedor = anuncioDao.getAnunciosFornecedor(usuario.getId());            
             //FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("fornecedor", fornecedor);
             //FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usuario);
             return "LstAnuncio";
-        }
+        }else if(usuario.getTipousuario()==usuario.getTipousuario().ADMINISTRADOR){
+            anunciosaprovar = anuncioDao.getAnunciosAprovar();
+            return "LstAnuncioAdm";
+        } else
+            return null;
     }  
      
     public String cadastrarUsuario(){
@@ -136,9 +155,11 @@ public class GuiAdm implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário já cadastrado!","Erro no Cadastro!"));
             return "CadUsuario";
         } else {
+            usuarioDao.gravar(usuario);
             fornecedor = new Fornecedor();
             fornecedor.setUsuario(usuario);
-            usuarioDao.gravar(usuario);
+            usuario.setTipousuario(TipoUsuario.FORNECEDOR);
+            usuarioDao.alterar(usuario);
             //FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("fornecedor", fornecedor);
             return "CadFornecedor";
         }
@@ -177,7 +198,6 @@ public class GuiAdm implements Serializable {
         String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
         fornecedor.setFoto(resp);
         fornecedorDao.gravar(fornecedor);
-        
         return "LstAnuncio";
     }
 
@@ -214,21 +234,30 @@ public class GuiAdm implements Serializable {
         this.idBairro = idBairro;
     }
 
-    public UploadedFile getFileFornecedor() {
-        return filefornecedor;
-    }
-
-    public void setFileFornecedor(UploadedFile file) {
-        this.filefornecedor = file;
-    }
-    
     public String cadastrarAnuncio(){
         //fornecedor = (Fornecedor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("fornecedor");
         //usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        
         anuncio = new Anuncio();
         anuncio.setFornecedor(fornecedor);
         return "CadAnuncio";
+    }
+    
+    public String aprovarAnuncio(Anuncio _anuncio){
+        _anuncio.setDataaprovacao(LocalDate.now());
+        _anuncio.setAprovacao(usuario);
+        anuncioDao.alterar(_anuncio);
+        anunciosaprovar = anuncioDao.getAnunciosAprovar();
+        anunciosaprovados = anuncioDao.getAnunciosAprovados();
+        return "LstAnuncioAdm";
+    }
+    
+    public String rejeitarAnuncio (Anuncio _anuncio){
+        _anuncio.setDataaprovacao(null);
+        _anuncio.setAprovacao(null);
+        anuncioDao.alterar(_anuncio);
+        anunciosaprovar = anuncioDao.getAnunciosAprovar();
+        anunciosaprovados = anuncioDao.getAnunciosAprovados();
+        return "LstAnuncioAdm";
     }
     
     public String alterarAnuncio(Anuncio _anuncio){
@@ -239,21 +268,93 @@ public class GuiAdm implements Serializable {
     
     public String deletarAnuncio(Anuncio _anuncio) {
         anuncioDao.deletar(_anuncio);
+        anunciosfornecedor = anuncioDao.getAnunciosFornecedor(usuario.getId()); 
+        anuncios = anuncioDao.getAnuncios();
+        anunciosaprovar = anuncioDao.getAnunciosAprovar();
+        anunciosaprovados = anuncioDao.getAnunciosAprovados();
         return "LstAnuncio";
     }
     
     public String gravarAnuncio(){
-        byte[] content = fileanuncio.getContent();
-        String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
-        fotoanuncio.setFoto(resp);
-        fotoanuncioDao.gravar(fotoanuncio);
-        anuncio.salvarFoto(fotoanuncio);
         anuncioDao.gravar(anuncio);
-        anunciosfornecedor = anuncioDao.getAnunciosFornecedor(usuario.getId()); 
         
+        if(!(fileanuncio.getContent()==null)){
+            fotoanuncio = new FotoAnuncio();
+            fotoanuncioDao.gravar(fotoanuncio);
+            byte[] content = fileanuncio.getContent();
+            String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
+            fotoanuncio.setFoto(resp);
+            anuncio.salvarFoto(fotoanuncio);
+            fotoanuncioDao.alterar(fotoanuncio);
+        }
+        if(!(fileanuncio2.getContent()==null)){
+            fotoanuncio2 = new FotoAnuncio();
+            fotoanuncioDao.gravar(fotoanuncio2);
+            byte[] content = fileanuncio2.getContent();
+            String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
+            fotoanuncio2.setFoto(resp);
+            anuncio.salvarFoto(fotoanuncio2);
+            fotoanuncioDao.alterar(fotoanuncio2);
+        }
+        if(!(fileanuncio3.getContent()==null)){
+            fotoanuncio3 = new FotoAnuncio();
+            fotoanuncioDao.gravar(fotoanuncio3);
+            byte[] content = fileanuncio3.getContent();
+            String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
+            fotoanuncio3.setFoto(resp);
+            anuncio.salvarFoto(fotoanuncio3);
+            fotoanuncioDao.alterar(fotoanuncio3);
+        }
+        if(!(fileanuncio4.getContent()==null)){
+            fotoanuncio4 = new FotoAnuncio();
+            fotoanuncioDao.gravar(fotoanuncio4);
+            byte[] content = fileanuncio4.getContent();
+            String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
+            fotoanuncio4.setFoto(resp);
+            anuncio.salvarFoto(fotoanuncio4);
+            fotoanuncioDao.alterar(fotoanuncio4);
+        }
+        if(!(fileanuncio5.getContent()==null)){
+            fotoanuncio5 = new FotoAnuncio();
+            fotoanuncioDao.gravar(fotoanuncio5);
+            byte[] content = fileanuncio5.getContent();
+            String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
+            fotoanuncio5.setFoto(resp);
+            anuncio.salvarFoto(fotoanuncio5);
+            fotoanuncioDao.alterar(fotoanuncio5);
+        }
+        if(!(fileanuncio6.getContent()==null)){
+            fotoanuncio6 = new FotoAnuncio();
+            fotoanuncioDao.gravar(fotoanuncio6);
+            byte[] content = fileanuncio6.getContent();
+            String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
+            fotoanuncio6.setFoto(resp);
+            anuncio.salvarFoto(fotoanuncio6);
+            fotoanuncioDao.alterar(fotoanuncio6);
+        }
+        anuncioDao.alterar(anuncio);
+        anunciosfornecedor = anuncioDao.getAnunciosFornecedor(usuario.getId()); 
+        anuncios = anuncioDao.getAnuncios();
         return "LstAnuncio";
     }
-
+    
+    public String meusAnuncios(){
+        if (!(usuario==null)){
+            if(usuario.getTipousuario()==usuario.getTipousuario().FORNECEDOR)
+                return "LstAnuncio";
+            if(usuario.getTipousuario()==usuario.getTipousuario().ADMINISTRADOR)
+                return "LstAnuncioAdm";
+        } else {
+            return this.loginUsuario();
+        }
+        return null;
+    }
+    
+    public String sairUsuario(){
+        usuario = null;
+        return "index";
+    }
+    
     public Anuncio getAnuncio() {
         return anuncio;
     }
@@ -299,6 +400,16 @@ public class GuiAdm implements Serializable {
         this.anunciosaprovados = anunciosaprovados;
     }
 
+    public List<Anuncio> getAnunciosaprovar() {
+        return anunciosaprovar;
+    }
+
+    public void setAnunciosaprovar(List<Anuncio> anunciosaprovar) {
+        this.anunciosaprovar = anunciosaprovar;
+    }
+    
+    
+    
     public TipoProduto[] getTiposprodutos() {
         return TipoProduto.values();
     }
@@ -334,15 +445,61 @@ public class GuiAdm implements Serializable {
         return "ViewAnuncio";
     }
     
-    public UploadedFile getFileAnuncio() {
+    public UploadedFile getFilefornecedor() {
+        return filefornecedor;
+    }
+
+    public void setFilefornecedor(UploadedFile filefornecedor) {
+        this.filefornecedor = filefornecedor;
+    }
+
+    public UploadedFile getFileanuncio() {
         return fileanuncio;
     }
 
-    public void setFileAnuncio(UploadedFile file) {
-        this.fileanuncio = file;
+    public void setFileanuncio(UploadedFile fileanuncio) {
+        this.fileanuncio = fileanuncio;
+    }
+
+    public UploadedFile getFileanuncio2() {
+        return fileanuncio2;
+    }
+
+    public void setFileanuncio2(UploadedFile fileanuncio2) {
+        this.fileanuncio2 = fileanuncio2;
+    }
+
+    public UploadedFile getFileanuncio3() {
+        return fileanuncio3;
+    }
+
+    public void setFileanuncio3(UploadedFile fileanuncio3) {
+        this.fileanuncio3 = fileanuncio3;
+    }
+
+    public UploadedFile getFileanuncio4() {
+        return fileanuncio4;
+    }
+
+    public void setFileanuncio4(UploadedFile fileanuncio4) {
+        this.fileanuncio4 = fileanuncio4;
+    }
+
+    public UploadedFile getFileanuncio5() {
+        return fileanuncio5;
+    }
+
+    public void setFileanuncio5(UploadedFile fileanuncio5) {
+        this.fileanuncio5 = fileanuncio5;
+    }
+
+    public UploadedFile getFileanuncio6() {
+        return fileanuncio6;
+    }
+
+    public void setFileanuncio6(UploadedFile fileanuncio6) {
+        this.fileanuncio6 = fileanuncio6;
     }
     
-    public void fileUploadListener(FileUploadEvent e) {
-        this.fileanuncio = e.getFile();
-    }
+    
 }

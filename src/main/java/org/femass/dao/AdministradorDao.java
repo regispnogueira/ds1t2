@@ -33,7 +33,7 @@ public class AdministradorDao {
     }
     
     public void deletar(Administrador administrador) {
-        em.remove(administrador);
+        em.remove(em.merge(administrador));
     }
     
     public List<Administrador> getAdministradores() {

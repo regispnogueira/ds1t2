@@ -3,39 +3,43 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Cadastro Fornecedor</title>
     </h:head>
     <h:body>
-        <h:form enctype="multipart/form-data">
-            <p:panelGrid columns="2" >
-                <p:outputLabel value="Nome*" />
-                <p:inputText value="#{guiAdm.fornecedor.nome}" />
-                <p:outputLabel value="Telefone*" />
-                <p:inputMask value="#{guiAdm.fornecedor.telefone}" mask="(99)99999-9999" />
-                <p:outputLabel value="Endereço*" />
-                <p:inputText value="#{guiAdm.fornecedor.endereco}" />
-                <p:outputLabel value="Bairro" />
-                <p:selectOneMenu value="#{guiAdm.idBairro}" style="width:250px"  >
-                    <f:selectItems value="#{guiAdm.bairros}" var="b" itemLabel="#{b.nome}" itemValue="#{b.id}"/>
-                </p:selectOneMenu>
-                <p:outputLabel value="CEP*" />
-                <p:inputMask value="#{guiAdm.fornecedor.cep}" mask="99999-999" />
-                <p:outputLabel value="URL" />
-                <p:inputText value="#{guiAdm.fornecedor.url}" />
-                <p:outputLabel value="Facebook" />
-                <p:inputText value="#{guiAdm.fornecedor.facebook}" />
-                <p:outputLabel value="Instagram" />
-                <p:inputText value="#{guiAdm.fornecedor.instagram}" />
-                <p:outputLabel value="Foto (Fachada ou Logo)*" />
-                <p:fileUpload value="#{guiAdm.fileFornecedor}" mode="simple" skinSimple="true"/>
-                <br />
-              </p:panelGrid>
-            <p:commandButton value="Gravar" action="#{guiAdm.gravarFornecedor()}" ajax="false" />
-        </h:form>
-            
-        
+        <ui:composition template="template.xhtml">
+            <ui:define name="content">
+                <h:form enctype="multipart/form-data">
+                    <p:panelGrid columns="2" >
+                        <p:outputLabel value="Nome*" />
+                        <p:inputText value="#{guiAdm.fornecedor.nome}" />
+                        <p:outputLabel value="Telefone*" />
+                        <p:inputMask value="#{guiAdm.fornecedor.telefone}" mask="(99)99999-9999" />
+                        <p:outputLabel value="Endereço*" />
+                        <p:inputText value="#{guiAdm.fornecedor.endereco}" />
+                        <p:outputLabel value="Bairro" />
+                        <p:selectOneMenu value="#{guiAdm.idBairro}" style="width:250px"  >
+                            <f:selectItems value="#{guiAdm.bairros}" var="b" itemLabel="#{b.nome}" itemValue="#{b.id}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="CEP*" />
+                        <p:inputMask value="#{guiAdm.fornecedor.cep}" mask="99999-999" />
+                        <p:outputLabel value="URL" />
+                        <p:inputText value="#{guiAdm.fornecedor.url}" />
+                        <p:outputLabel value="Facebook" />
+                        <p:inputText value="#{guiAdm.fornecedor.facebook}" />
+                        <p:outputLabel value="Instagram" />
+                        <p:inputText value="#{guiAdm.fornecedor.instagram}" />
+                        <p:outputLabel value="Foto (Fachada ou Logo)*" />
+                        <p:fileUpload value="#{guiAdm.filefornecedor}" mode="simple" skinSimple="true"/>
+                        <br />
+                    </p:panelGrid>
+                    <p:commandButton value="Gravar" action="#{guiAdm.gravarFornecedor()}" ajax="false" />
+                </h:form>
+            </ui:define>
+        </ui:composition>        
+
     </h:body>
 </html>
 

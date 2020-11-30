@@ -33,7 +33,7 @@ public class SubcategoriaDao {
     }
     
     public void deletar(Subcategoria subcategoria) {
-        em.remove(subcategoria);
+        em.remove(em.merge(subcategoria));
     }
     
     public List<Subcategoria> getSubcategorias() {

@@ -35,7 +35,7 @@ public class FornecedorDao {
     }
     
     public void deletar(Fornecedor fornecedor) {
-        em.remove(fornecedor);
+        em.remove(em.merge(fornecedor));
     }
     
     public List<Fornecedor> getFornecedores() {

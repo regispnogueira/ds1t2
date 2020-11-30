@@ -33,7 +33,7 @@ public class BairroDao {
     }
     
     public void deletar(Bairro bairro) {
-        em.remove(bairro);
+        em.remove(em.merge(bairro));
     }
     
     public List<Bairro> getBairros() {

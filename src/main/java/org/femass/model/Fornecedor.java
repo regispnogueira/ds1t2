@@ -12,8 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.base64.Base64;
-
 /**
  *
  * @author Régis

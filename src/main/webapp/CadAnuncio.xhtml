@@ -3,40 +3,49 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Cadastro Anuncios</title>
     </h:head>
     <h:body>
-        <h:form enctype="multipart/form-data">
-            <p:panelGrid columns="2" >
-                <p:outputLabel value="Nome*" />
-                <p:inputText value="#{guiAdm.anuncio.nome}" />
-                <p:outputLabel value="Descrição*" />
-                <p:inputText value="#{guiAdm.anuncio.descricao}" />
-                <p:outputLabel value="Valor(R$)*" />
-                <p:inputNumber value="#{guiAdm.anuncio.valor}" />
-                <p:outputLabel value="Categoria" />
-                <p:selectOneMenu value="#{guiAdm.idSubcategoria}" style="width:250px"  >
-                    <f:selectItems value="#{guiAdm.subcategorias}" var="s" itemLabel="#{s.nome}" itemValue="#{s.id}"/>
-                </p:selectOneMenu>
-                <p:outputLabel value="Validade*" />
-                <p:inputMask value="#{guiAdm.anuncio.validade}" mask="99/99/9999" converter="localDateFacesConverter" />
-                <p:outputLabel value="Estado*" />
-                <p:selectOneMenu value="#{guiAdm.anuncio.tipoproduto}" style="width:250px"  >
-                    <f:selectItems value="#{guiAdm.tiposprodutos}" />
-                </p:selectOneMenu>
-                <p:outputLabel value="Foto*" />
-                <p:fileUpload value="#{guiAdm.anuncio.fotos}" fileUploadListener="#{guiAdm.fileUploadListener}" skinSimple="true" multiple="true" 
-                                allowTypes="/(\.|\/)(gif|jpe?g|png)$/" invalidFileMessage="São permitidas somente imagens (gif, jpeg, jpg e png)" 
-                                fileLimit="6" fileLimitMessage="Só é possível escolher 6 arquivos por anuncio." />
-                
-                <br />                               
-            </p:panelGrid>
-            <p:commandButton value="Gravar" action="#{guiAdm.gravarAnuncio()}" ajax="false" />
-        </h:form>
-            
-        
+        <ui:composition template="template.xhtml">
+            <ui:define name="content">
+                <h:form enctype="multipart/form-data">
+                    <p:panelGrid columns="2" layout="tabular" >
+                        <p:outputLabel value="Nome*" />
+                        <p:inputText value="#{guiAdm.anuncio.nome}" />
+                        <p:outputLabel value="Descrição*" />
+                        <p:inputText value="#{guiAdm.anuncio.descricao}" />
+                        <p:outputLabel value="Valor(R$)*" />
+                        <p:inputNumber value="#{guiAdm.anuncio.valor}" decimalSeparator="," thousandSeparator="." symbol="R$ " symbolPosition="p"  />
+                        <p:outputLabel value="Categoria" />
+                        <p:selectOneMenu value="#{guiAdm.idSubcategoria}" style="width:250px"  >
+                            <f:selectItems value="#{guiAdm.subcategorias}" var="s" itemLabel="#{s.nome}" itemValue="#{s.id}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Estado*" />
+                        <p:selectOneMenu value="#{guiAdm.anuncio.tipoproduto}" style="width:250px"  >
+                            <f:selectItems value="#{guiAdm.tiposprodutos}" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Foto1*" />
+                        <p:fileUpload value="#{guiAdm.fileanuncio}" mode="simple" skinSimple="true"/> 
+                        <p:outputLabel value="Foto2" />
+                        <p:fileUpload value="#{guiAdm.fileanuncio2}" mode="simple" skinSimple="true"/>
+                        <p:outputLabel value="Foto3" />
+                        <p:fileUpload value="#{guiAdm.fileanuncio3}" mode="simple" skinSimple="true"/>
+                        <p:outputLabel value="Foto4" />
+                        <p:fileUpload value="#{guiAdm.fileanuncio4}" mode="simple" skinSimple="true"/>
+                        <p:outputLabel value="Foto5" />
+                        <p:fileUpload value="#{guiAdm.fileanuncio5}" mode="simple" skinSimple="true"/>
+                        <p:outputLabel value="Foto6" />
+                        <p:fileUpload value="#{guiAdm.fileanuncio6}" mode="simple" skinSimple="true"/>
+                        <br />                               
+                    </p:panelGrid>
+                    <p:commandButton value="Gravar" action="#{guiAdm.gravarAnuncio()}" ajax="false" />
+                </h:form>
+            </ui:define>
+        </ui:composition>    
+
     </h:body>
 </html>
 

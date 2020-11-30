@@ -33,7 +33,7 @@ public class CategoriaDao {
     }
     
     public void deletar(Categoria categoria) {
-        em.remove(categoria);
+        em.remove(em.merge(categoria));
     }
     
     public List<Categoria> getCategorias() {

@@ -33,15 +33,19 @@ public class AnuncioDao {
     }
     
     public void deletar(Anuncio anuncio) {
-        em.remove(anuncio);
+        em.remove(em.merge(anuncio));
     }
     
-    public List<Anuncio> getAnuncios() {
+   public List<Anuncio> getAnuncios() {
         Query q = em.createQuery("select a from Anuncio a order by a.id");
         return q.getResultList();
     }
     public List<Anuncio> getAnunciosAprovados() {
         Query q = em.createQuery("select a from Anuncio a where a.aprovacao is not null order by a.nome");
+        return q.getResultList();
+    }
+    public List<Anuncio> getAnunciosAprovar() {
+        Query q = em.createQuery("select a from Anuncio a where a.aprovacao is null order by a.nome");
         return q.getResultList();
     }
     public List<Anuncio> getAnunciosFornecedor(Long idUsuario) {
@@ -50,7 +54,7 @@ public class AnuncioDao {
         return q.getResultList();
     }
     public List<Anuncio> getAnunciosBusca(String search){
-        Query q = em.createQuery("select a from Anuncio a where a.descricao like :search or a.nome like :search");
+        Query q = em.createQuery("select a from Anuncio a where a.aprovacao is not null AND a.descricao like :search OR a.nome like :search");
         q.setParameter("search", "%" + search + "%");
         return q.getResultList();
     }       

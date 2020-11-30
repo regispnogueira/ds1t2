@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Anúncios para Aprovação</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <p:outputLabel value="Anúncios para aprovar" />
+                    <p:dataTable value="#{guiAdm.anunciosaprovar}" var="a" >
+                        <p:column headerText="Nome">
+                            <p:commandLink value="#{a.nome}" action="#{guiAdm.visualizarAnuncio(a)}" />
+                        </p:column>
+                        <p:column headerText="Preço" >
+                            <p:outputLabel value="R$ #{a.valor}" />
+                        </p:column>
+                        <p:column headerText="Descrição">
+                            <p:outputLabel value="#{a.descricao}" />
+                        </p:column>
+                        <p:column >
+                            <p:commandButton  id="cmdAprovar" action="#{guiAdm.aprovarAnuncio(a)}" ajax="false" icon="fa fa-check" >
+                                <p:tooltip id="toolTipAprovar" for="cmdAprovar" value="Aprova um anuncio" position="top"/>
+                            </p:commandButton>
+                            <p:commandButton  id="cmdExcluir" action="#{guiAdm.deletarAnuncio(a)}" ajax="false" icon="fa fa-remove" >
+                                <p:tooltip id="toolTipExcluir" for="cmdExcluir" value="Exclui um anuncio" position="top"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    <p:outputLabel value="Anúncios aprovados" />
+                    <p:dataTable value="#{guiAdm.anunciosaprovados}" var="a" >
+                        <p:column headerText="Nome">
+                            <p:commandLink value="#{a.nome}" action="#{guiAdm.visualizarAnuncio(a)}" />
+                        </p:column>
+                        <p:column headerText="Preço" >
+                            <p:outputLabel value="R$ #{a.valor}" />
+                        </p:column>
+                        <p:column headerText="Data Aprovação">
+                            <p:outputLabel value="#{a.dataaprovacao}" converter="localDateFacesConverter" />
+                        </p:column>
+                        <p:column headerText="Aprovado por">
+                            <p:outputLabel value="#{a.aprovacao.email}" />
+                        </p:column>
+                        <p:column >
+                            <p:commandButton  id="cmdRejeitar" action="#{guiAdm.rejeitarAnuncio(a)}" ajax="false" icon="fa fa-thumbs-o-down" >
+                                <p:tooltip id="toolTipRejeitar" for="cmdRejeitar" value="Rejeita um anuncio" position="top"/>
+                            </p:commandButton>
+                            <p:commandButton  id="cmdExcluir" action="#{guiAdm.deletarAnuncio(a)}" ajax="false" icon="fa fa-remove" >
+                                <p:tooltip id="toolTipExcluir" for="cmdExcluir" value="Exclui um anuncio" position="top"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

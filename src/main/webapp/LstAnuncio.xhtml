@@ -2,31 +2,39 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Anúncios</title>
     </h:head>
     <h:body>
-        <h:form>
-            <p:commandButton value="Incluir" action="#{guiAdm.cadastrarAnuncio()}" ajax="false" icon="fa fa-align-justify" />
-            <p:dataTable value="#{guiAdm.anunciosfornecedor}" var="a" >
-                <p:column headerText="Nome">
-                    <p:outputLabel value="#{a.nome}" />
-                </p:column>
-                <p:column headerText="Preço" >
-                    <p:commandLink value="#{a.valor}"  action="#{guiAdm.alterarAnuncio(a)}" ajax="false"/>
-                </p:column>
-                <p:column headerText="Validade">
-                    <p:commandLink value="#{a.validade}" />
-                </p:column>
-                <p:column >
-                    <p:commandButton  id="cmdAlterar" action="#{guiAdm.alterarAnuncio(a)}" ajax="false" icon="fa fa-edit" >
-                        <p:tooltip id="toolTipAlterar" for="cmdAlterar" value="Altera um anuncio" position="top"/>
-                    </p:commandButton>
-                </p:column>
-                
-            </p:dataTable>
-        </h:form>
+        <ui:composition template="template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <p:commandButton value="Incluir" action="#{guiAdm.cadastrarAnuncio()}" ajax="false" icon="fa fa-plus" />
+                    <p:dataTable value="#{guiAdm.anunciosfornecedor}" var="a" >
+                        <p:column headerText="Nome">
+                            <p:commandLink value="#{a.nome}" action="#{guiAdm.visualizarAnuncio(a)}" />
+                        </p:column>
+                        <p:column headerText="Preço" >
+                            <p:outputLabel value="R$ #{a.valor}" />
+                        </p:column>
+                        <p:column headerText="Data Aprovação">
+                            <p:outputLabel value="#{a.dataaprovacao}" converter="localDateFacesConverter" />
+                        </p:column>
+                        <p:column >
+                            <p:commandButton  id="cmdAlterar" action="#{guiAdm.alterarAnuncio(a)}" ajax="false" icon="fa fa-edit" >
+                                <p:tooltip id="toolTipAlterar" for="cmdAlterar" value="Altera um anuncio" position="top"/>
+                            </p:commandButton>
+                            <p:commandButton  id="cmdExcluir" action="#{guiAdm.deletarAnuncio(a)}" ajax="false" icon="fa fa-remove" >
+                                <p:tooltip id="toolTipExcluir" for="cmdExcluir" value="Exclui um anuncio" position="top"/>
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 

@@ -34,7 +34,7 @@ public class FotoAnuncioDao {
     }
     
     public void deletar(FotoAnuncio fotoanuncio) {
-        em.remove(fotoanuncio);
+        em.remove(em.merge(fotoanuncio));
     }
     
     public List<FotoAnuncio> getFotoAnuncios() {

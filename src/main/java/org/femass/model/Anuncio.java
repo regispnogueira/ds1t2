@@ -8,6 +8,7 @@ package org.femass.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,12 +32,12 @@ public class Anuncio implements Serializable {
     @ManyToOne
     private Fornecedor fornecedor;
     @ManyToOne
-    private Administrador aprovacao;
+    private Usuario aprovacao;
     private LocalDate dataaprovacao;
     private String descricao;
     private Double valor;
     private LocalDate validade;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<FotoAnuncio> fotos;
     @OneToOne
     private Subcategoria subcategoria;
@@ -93,11 +94,11 @@ public class Anuncio implements Serializable {
         this.fornecedor = fornecedor;
     }
 
-    public Administrador getAprovacao() {
+    public Usuario getAprovacao() {
         return aprovacao;
     }
 
-    public void setAprovacao(Administrador aprovacao) {
+    public void setAprovacao(Usuario aprovacao) {
         this.aprovacao = aprovacao;
     }
 

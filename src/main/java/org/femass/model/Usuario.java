@@ -24,6 +24,7 @@ public class Usuario implements Serializable {
     private Long id;
     private String email;
     private String senha;
+    private TipoUsuario tipousuario;
 
     public Long getId() {
         return id;
@@ -73,9 +74,15 @@ public class Usuario implements Serializable {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
-    public void logar(){
-        
+
+    public TipoUsuario getTipousuario() {
+        return tipousuario;
     }
+
+    public void setTipousuario(TipoUsuario tipousuario) {
+        this.tipousuario = tipousuario;
+    }
+    
+   
     
 }

@@ -12,12 +12,13 @@
             <ui:define name="content">
                 <h:form>
                     <h:panelGrid columns="1">
-                        <p:dataGrid var="a" value="#{guiAdm.anuncios}" columns="10" layout="grid" rows="20"  >
+                        <p:dataGrid var="a" value="#{guiAdm.anunciosaprovados}" columns="10" layout="grid" rows="20"  >
                             <p:panel header="#{a.subcategoria}" style="text-align:center">
                                 <h:panelGrid columns="1" style="width:100%">
                                     <h:graphicImage value="#{a.fornecedor.foto}" width="100px" /> 
                                     <p:commandLink value="#{a.nome}" action="#{guiAdm.visualizarAnuncio(a)}" />
-                                    <p:commandLink value="#{a.valor}" action="#{guiAdm.visualizarAnuncio(a)}" />
+                                    <p:commandLink value="#{a.descricao}" action="#{guiAdm.visualizarAnuncio(a)}" />
+                                    <p:commandLink value="R$ #{a.valor}" action="#{guiAdm.visualizarAnuncio(a)}" />
                                 </h:panelGrid>
                              </p:panel>    
                         </p:dataGrid>
