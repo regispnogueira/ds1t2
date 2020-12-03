@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Divulga Agora</title>
     </h:head>
@@ -12,12 +13,18 @@
             <ui:define name="content">
                 <h:form>
                     <h:panelGrid columns="1">
+                        <p:selectOneMenu value="#{guiAdm.idBairro}" style="width:250px"  >
+                            <f:selectItem itemLabel="Selecione um bairro" itemValue="#{guiAdm.idBairro=null}"/>
+                            <f:selectItems value="#{guiAdm.bairros}" var="b" itemLabel="#{b.nome}" itemValue="#{b.id}"/>
+                        </p:selectOneMenu>
+                        <p:commandButton value="Buscar" action="#{guiAdm.buscarAnuncio()}" ajax="false" icon="fa fa-search-plus" />
                         <p:dataGrid var="a" value="#{guiAdm.anunciosbusca}" columns="10" layout="grid" rows="20"  >
                             <p:panel header="#{a.subcategoria}" style="text-align:center">
                                 <h:panelGrid columns="1" style="width:100%">
                                     <h:graphicImage value="#{a.fornecedor.foto}" width="100px" /> 
                                     <p:commandLink value="#{a.nome}" action="#{guiAdm.visualizarAnuncio(a)}" />
-                                    <p:commandLink value="#{a.valor}" action="#{guiAdm.visualizarAnuncio(a)}" />
+                                    <p:commandLink value="#{a.descricao}" action="#{guiAdm.visualizarAnuncio(a)}" />
+                                    <p:commandLink value="R$ #{a.valor}" action="#{guiAdm.visualizarAnuncio(a)}" />
                                 </h:panelGrid>
                              </p:panel>    
                         </p:dataGrid>

@@ -9,8 +9,7 @@
             width:100%;
             left:0;
             top:0;
-
-	}
+        }
 	
 	#content {
             background-color:#666666;
@@ -25,8 +24,8 @@
 	#bottom {
             background-color:#999999;
             position:relative;
-            margin-left: 550px;
-            padding:10px;
-            bottom:02px;
-            top: 7em
+            margin-left: 0px;
+            padding:5px;
+            bottom:0px;
+            top: 1em
         }	

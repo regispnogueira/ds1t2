@@ -12,13 +12,14 @@
         <ui:composition template="template.xhtml">
             <ui:define name="content">
                 <h:form enctype="multipart/form-data">
+                    <p:messages id="messages"/>
                     <p:panelGrid columns="2" layout="tabular" >
                         <p:outputLabel value="Nome*" />
-                        <p:inputText value="#{guiAdm.anuncio.nome}" />
+                        <p:inputText value="#{guiAdm.anuncio.nome}" required="true" requiredMessage="Nome de preenchimento obrigatório"  />
                         <p:outputLabel value="Descrição*" />
-                        <p:inputText value="#{guiAdm.anuncio.descricao}" />
+                        <p:inputText value="#{guiAdm.anuncio.descricao}" required="true" requiredMessage="Descrição de preenchimento obrigatório"  />
                         <p:outputLabel value="Valor(R$)*" />
-                        <p:inputNumber value="#{guiAdm.anuncio.valor}" decimalSeparator="," thousandSeparator="." symbol="R$ " symbolPosition="p"  />
+                        <p:inputNumber value="#{guiAdm.anuncio.valor}" decimalSeparator="," thousandSeparator="." symbol="R$ " symbolPosition="p" required="true" requiredMessage="Valor de preenchimento obrigatório"   />
                         <p:outputLabel value="Categoria" />
                         <p:selectOneMenu value="#{guiAdm.idSubcategoria}" style="width:250px"  >
                             <f:selectItems value="#{guiAdm.subcategorias}" var="s" itemLabel="#{s.nome}" itemValue="#{s.id}"/>
@@ -39,9 +40,9 @@
                         <p:fileUpload value="#{guiAdm.fileanuncio5}" mode="simple" skinSimple="true"/>
                         <p:outputLabel value="Foto6" />
                         <p:fileUpload value="#{guiAdm.fileanuncio6}" mode="simple" skinSimple="true"/>
-                        <br />                               
                     </p:panelGrid>
-                    <p:commandButton value="Gravar" action="#{guiAdm.gravarAnuncio()}" ajax="false" />
+                    <p:commandButton value="Gravar" action="#{guiAdm.gravarAnuncio()}" ajax="false" update="messages" />
+                    <p:commandButton value="Voltar" action="#{guiAdm.meusAnuncios()}" immediate="true" ajax="false"  />
                 </h:form>
             </ui:define>
         </ui:composition>    

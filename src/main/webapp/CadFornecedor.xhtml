@@ -17,6 +17,8 @@
                         <p:inputText value="#{guiAdm.fornecedor.nome}" />
                         <p:outputLabel value="Telefone*" />
                         <p:inputMask value="#{guiAdm.fornecedor.telefone}" mask="(99)99999-9999" />
+                        <p:outputLabel value="Whatsapp*" />
+                        <p:inputMask value="#{guiAdm.fornecedor.whatsapp}" mask="(99)99999-9999" />
                         <p:outputLabel value="Endereço*" />
                         <p:inputText value="#{guiAdm.fornecedor.endereco}" />
                         <p:outputLabel value="Bairro" />
@@ -33,7 +35,6 @@
                         <p:inputText value="#{guiAdm.fornecedor.instagram}" />
                         <p:outputLabel value="Foto (Fachada ou Logo)*" />
                         <p:fileUpload value="#{guiAdm.filefornecedor}" mode="simple" skinSimple="true"/>
-                        <br />
                     </p:panelGrid>
                     <p:commandButton value="Gravar" action="#{guiAdm.gravarFornecedor()}" ajax="false" />
                 </h:form>

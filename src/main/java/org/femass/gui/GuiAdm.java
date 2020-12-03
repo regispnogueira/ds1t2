@@ -9,7 +9,6 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.time.LocalDate;
-import static java.time.temporal.TemporalQueries.localDate;
 import java.util.Base64;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -73,6 +72,7 @@ public class GuiAdm implements Serializable {
     private List<Anuncio> anunciosaprovados;
     private List<Anuncio> anunciosfornecedor;
     private List<Anuncio> anunciosbusca;
+    private List<Anuncio> anunciosbusca_;
     private List<Anuncio> anunciosaprovar;
     private List<Subcategoria> subcategorias;
     private List<Usuario> usuarios;
@@ -197,7 +197,13 @@ public class GuiAdm implements Serializable {
         byte[] content = filefornecedor.getContent();
         String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
         fornecedor.setFoto(resp);
+        for (Bairro b: bairros){
+            if(b.getId().equals(idBairro)){
+                fornecedor.setBairro(b);
+            }
+        }
         fornecedorDao.gravar(fornecedor);
+        idBairro = null;
         return "LstAnuncio";
     }
 
@@ -272,7 +278,7 @@ public class GuiAdm implements Serializable {
         anuncios = anuncioDao.getAnuncios();
         anunciosaprovar = anuncioDao.getAnunciosAprovar();
         anunciosaprovados = anuncioDao.getAnunciosAprovados();
-        return "LstAnuncio";
+        return this.meusAnuncios();
     }
     
     public String gravarAnuncio(){
@@ -350,7 +356,7 @@ public class GuiAdm implements Serializable {
         return null;
     }
     
-    public String sairUsuario(){
+   public String sairUsuario(){
         usuario = null;
         return "index";
     }
@@ -407,9 +413,7 @@ public class GuiAdm implements Serializable {
     public void setAnunciosaprovar(List<Anuncio> anunciosaprovar) {
         this.anunciosaprovar = anunciosaprovar;
     }
-    
-    
-    
+
     public TipoProduto[] getTiposprodutos() {
         return TipoProduto.values();
     }
@@ -427,7 +431,18 @@ public class GuiAdm implements Serializable {
     }
     
     public String buscarAnuncio(){
-        anunciosbusca = anuncioDao.getAnunciosBusca(search);
+        if(idBairro==null){
+            anunciosbusca = anuncioDao.getAnunciosBusca(search);
+        } else {
+            anunciosbusca.clear();
+            anunciosbusca_ = anuncioDao.getAnunciosBusca(search);
+            for(Anuncio a: anunciosbusca_){
+                if(a.getFornecedor().getBairro().getId().equals(idBairro)){
+                        anunciosbusca.add(a);
+                }
+            }
+        }
+        
         return "LstAnuncioBusca";
     }
 

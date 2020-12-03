@@ -54,8 +54,9 @@ public class AnuncioDao {
         return q.getResultList();
     }
     public List<Anuncio> getAnunciosBusca(String search){
-        Query q = em.createQuery("select a from Anuncio a where a.aprovacao is not null AND a.descricao like :search OR a.nome like :search");
+        Query q = em.createQuery("select a from Anuncio a where a.dataaprovacao is not null AND (a.descricao like :search OR a.nome like :search)");
         q.setParameter("search", "%" + search + "%");
         return q.getResultList();
     }       
+    
 }
