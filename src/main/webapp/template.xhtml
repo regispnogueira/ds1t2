@@ -11,10 +11,16 @@
             <title><ui:insert name="title"></ui:insert></title>
         </h:head>
         <h:body>
+            <body id="header"> 
+            <div id="content"> 
         <div id="top" class="top">
             <h:form>
-                <ui:insert name="top">Divulga Agora</ui:insert>
-                <p:inputText id="busca" value="#{guiAdm.search}" label="Digite aqui sua busca" style="width:650px; margin-left: 4%"  />
+                <font color="#FFFFFF" size="5" face="Arial"> DIVULGA AGORA </font> <br />
+                <font color="#FFFFFF" size="1" face="Arial"> Sua plataforma de divulgações online </font> <br />
+                
+                <p:inputText id="busca" value="#{guiAdm.search}" label="Digite aqui sua busca" style="width:900px; margin-left: 0%; margin-right: 0%" />
+                
+                
                 <p:commandButton value="Buscar" action="#{guiAdm.buscarAnuncio()}" ajax="false" style="align-items: center" icon="fa fa-search"/>
                 <p:menubar>
                     <p:menuitem value="Home" action="index" icon="fa fa-home"  />
@@ -38,5 +44,7 @@
                 </h:form>
             </div>
         </div>
+        </div>
+        </body>   
         </h:body>
 </html>
