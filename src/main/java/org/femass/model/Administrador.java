@@ -76,8 +76,4 @@ public class Administrador implements Serializable {
         this.usuario = usuario;
     }
     
-    public void aprovarAnuncio(){
-        
-    }
-    
 }

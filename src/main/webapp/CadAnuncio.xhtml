@@ -17,12 +17,12 @@
                         <p:outputLabel value="Nome*" />
                         <p:inputText value="#{guiAdm.anuncio.nome}" required="true" requiredMessage="Nome de preenchimento obrigatório"  />
                         <p:outputLabel value="Descrição*" />
-                        <p:inputText value="#{guiAdm.anuncio.descricao}" required="true" requiredMessage="Descrição de preenchimento obrigatório"  />
+                        <p:inputTextarea value="#{guiAdm.anuncio.descricao}" required="true" requiredMessage="Descrição de preenchimento obrigatório"  />
                         <p:outputLabel value="Valor(R$)*" />
                         <p:inputNumber value="#{guiAdm.anuncio.valor}" decimalSeparator="," thousandSeparator="." symbol="R$ " symbolPosition="p" required="true" requiredMessage="Valor de preenchimento obrigatório"   />
                         <p:outputLabel value="Categoria" />
-                        <p:selectOneMenu value="#{guiAdm.idSubcategoria}" style="width:250px"  >
-                            <f:selectItems value="#{guiAdm.subcategorias}" var="s" itemLabel="#{s.nome}" itemValue="#{s.id}"/>
+                        <p:selectOneMenu value="#{guiAdm.idCategoria}" style="width:250px"  >
+                            <f:selectItems value="#{guiAdm.categorias}" var="c" itemLabel="#{c.nome}" itemValue="#{c.id}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Estado*" />
                         <p:selectOneMenu value="#{guiAdm.anuncio.tipoproduto}" style="width:250px"  >

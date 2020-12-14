@@ -19,13 +19,13 @@ import org.femass.dao.AnuncioDao;
 import org.femass.dao.BairroDao;
 import org.femass.dao.FornecedorDao;
 import org.femass.dao.FotoAnuncioDao;
-import org.femass.dao.SubcategoriaDao;
+import org.femass.dao.CategoriaDao;
 import org.femass.dao.UsuarioDao;
 import org.femass.model.Anuncio;
 import org.femass.model.Bairro;
 import org.femass.model.Fornecedor;
 import org.femass.model.FotoAnuncio;
-import org.femass.model.Subcategoria;
+import org.femass.model.Categoria;
 import org.femass.model.TipoProduto;
 import org.femass.model.TipoUsuario;
 import org.femass.model.Usuario;
@@ -53,7 +53,7 @@ public class GuiAdm implements Serializable {
     private FotoAnuncio fotoanuncio5;
     private FotoAnuncio fotoanuncio6;
     
-    private Long idSubcategoria;
+    private Long idCategoria;
     private Long idUsuario;
     private Long idBairro;
     private Long idAnuncio;
@@ -71,10 +71,12 @@ public class GuiAdm implements Serializable {
     private List<Anuncio> anuncios;
     private List<Anuncio> anunciosaprovados;
     private List<Anuncio> anunciosfornecedor;
+    private List<Anuncio> anunciosfornecedoraprovados;
+    private List<Anuncio> anuncioscategoria;
     private List<Anuncio> anunciosbusca;
     private List<Anuncio> anunciosbusca_;
     private List<Anuncio> anunciosaprovar;
-    private List<Subcategoria> subcategorias;
+    private List<Categoria> categorias;
     private List<Usuario> usuarios;
     private static List<Bairro> bairros;
     
@@ -85,7 +87,7 @@ public class GuiAdm implements Serializable {
     @EJB
     private BairroDao bairroDao;
     @EJB
-    private SubcategoriaDao subcategoriaDao;
+    private CategoriaDao categoriaDao;
     @EJB
     private AnuncioDao anuncioDao;
     @EJB
@@ -103,7 +105,7 @@ public class GuiAdm implements Serializable {
         anuncios = anuncioDao.getAnuncios();
         anunciosaprovar = anuncioDao.getAnunciosAprovar();
         anunciosaprovados = anuncioDao.getAnunciosAprovados();
-        subcategorias = subcategoriaDao.getSubcategorias();
+        categorias = categoriaDao.getCategorias();
     }
     
     public String loginUsuario(){
@@ -204,6 +206,7 @@ public class GuiAdm implements Serializable {
         }
         fornecedorDao.gravar(fornecedor);
         idBairro = null;
+        anunciosfornecedor = anuncioDao.getAnunciosFornecedor(usuario.getId());
         return "LstAnuncio";
     }
 
@@ -243,6 +246,7 @@ public class GuiAdm implements Serializable {
     public String cadastrarAnuncio(){
         //fornecedor = (Fornecedor) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("fornecedor");
         //usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        alterando = false;
         anuncio = new Anuncio();
         anuncio.setFornecedor(fornecedor);
         return "CadAnuncio";
@@ -269,7 +273,7 @@ public class GuiAdm implements Serializable {
     public String alterarAnuncio(Anuncio _anuncio){
         this.anuncio = _anuncio;
         alterando = true;
-        return "cadAnuncio";
+        return "CadAnuncio";
     }
     
     public String deletarAnuncio(Anuncio _anuncio) {
@@ -282,65 +286,76 @@ public class GuiAdm implements Serializable {
     }
     
     public String gravarAnuncio(){
-        anuncioDao.gravar(anuncio);
-        
-        if(!(fileanuncio.getContent()==null)){
-            fotoanuncio = new FotoAnuncio();
-            fotoanuncioDao.gravar(fotoanuncio);
-            byte[] content = fileanuncio.getContent();
-            String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
-            fotoanuncio.setFoto(resp);
-            anuncio.salvarFoto(fotoanuncio);
-            fotoanuncioDao.alterar(fotoanuncio);
+        if(!(alterando==true)){
+            anuncioDao.gravar(anuncio);
+            if(!(fileanuncio.getContent()==null)){
+                fotoanuncio = new FotoAnuncio();
+                fotoanuncioDao.gravar(fotoanuncio);
+                byte[] content = fileanuncio.getContent();
+                String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
+                fotoanuncio.setFoto(resp);
+                anuncio.salvarFoto(fotoanuncio);
+                fotoanuncioDao.alterar(fotoanuncio);
+            }
+            if(!(fileanuncio2.getContent()==null)){
+                fotoanuncio2 = new FotoAnuncio();
+                fotoanuncioDao.gravar(fotoanuncio2);
+                byte[] content = fileanuncio2.getContent();
+                String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
+                fotoanuncio2.setFoto(resp);
+                anuncio.salvarFoto(fotoanuncio2);
+                fotoanuncioDao.alterar(fotoanuncio2);
+            }
+            if(!(fileanuncio3.getContent()==null)){
+                fotoanuncio3 = new FotoAnuncio();
+                fotoanuncioDao.gravar(fotoanuncio3);
+                byte[] content = fileanuncio3.getContent();
+                String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
+                fotoanuncio3.setFoto(resp);
+                anuncio.salvarFoto(fotoanuncio3);
+                fotoanuncioDao.alterar(fotoanuncio3);
+            }
+            if(!(fileanuncio4.getContent()==null)){
+                fotoanuncio4 = new FotoAnuncio();
+                fotoanuncioDao.gravar(fotoanuncio4);
+                byte[] content = fileanuncio4.getContent();
+                String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
+                fotoanuncio4.setFoto(resp);
+                anuncio.salvarFoto(fotoanuncio4);
+                fotoanuncioDao.alterar(fotoanuncio4);
+            }
+            if(!(fileanuncio5.getContent()==null)){
+                fotoanuncio5 = new FotoAnuncio();
+                fotoanuncioDao.gravar(fotoanuncio5);
+                byte[] content = fileanuncio5.getContent();
+                String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
+                fotoanuncio5.setFoto(resp);
+                anuncio.salvarFoto(fotoanuncio5);
+                fotoanuncioDao.alterar(fotoanuncio5);
+            }
+            if(!(fileanuncio6.getContent()==null)){
+                fotoanuncio6 = new FotoAnuncio();
+                fotoanuncioDao.gravar(fotoanuncio6);
+                byte[] content = fileanuncio6.getContent();
+                String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
+                fotoanuncio6.setFoto(resp);
+                anuncio.salvarFoto(fotoanuncio6);
+                fotoanuncioDao.alterar(fotoanuncio6);
+            }
+        } else {
+                anuncio.setDataaprovacao(null);
+                anuncio.setAprovacao(null);
         }
-        if(!(fileanuncio2.getContent()==null)){
-            fotoanuncio2 = new FotoAnuncio();
-            fotoanuncioDao.gravar(fotoanuncio2);
-            byte[] content = fileanuncio2.getContent();
-            String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
-            fotoanuncio2.setFoto(resp);
-            anuncio.salvarFoto(fotoanuncio2);
-            fotoanuncioDao.alterar(fotoanuncio2);
-        }
-        if(!(fileanuncio3.getContent()==null)){
-            fotoanuncio3 = new FotoAnuncio();
-            fotoanuncioDao.gravar(fotoanuncio3);
-            byte[] content = fileanuncio3.getContent();
-            String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
-            fotoanuncio3.setFoto(resp);
-            anuncio.salvarFoto(fotoanuncio3);
-            fotoanuncioDao.alterar(fotoanuncio3);
-        }
-        if(!(fileanuncio4.getContent()==null)){
-            fotoanuncio4 = new FotoAnuncio();
-            fotoanuncioDao.gravar(fotoanuncio4);
-            byte[] content = fileanuncio4.getContent();
-            String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
-            fotoanuncio4.setFoto(resp);
-            anuncio.salvarFoto(fotoanuncio4);
-            fotoanuncioDao.alterar(fotoanuncio4);
-        }
-        if(!(fileanuncio5.getContent()==null)){
-            fotoanuncio5 = new FotoAnuncio();
-            fotoanuncioDao.gravar(fotoanuncio5);
-            byte[] content = fileanuncio5.getContent();
-            String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
-            fotoanuncio5.setFoto(resp);
-            anuncio.salvarFoto(fotoanuncio5);
-            fotoanuncioDao.alterar(fotoanuncio5);
-        }
-        if(!(fileanuncio6.getContent()==null)){
-            fotoanuncio6 = new FotoAnuncio();
-            fotoanuncioDao.gravar(fotoanuncio6);
-            byte[] content = fileanuncio6.getContent();
-            String resp = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(content); 
-            fotoanuncio6.setFoto(resp);
-            anuncio.salvarFoto(fotoanuncio6);
-            fotoanuncioDao.alterar(fotoanuncio6);
+        for (Categoria c: categorias){
+            if(c.getId().equals(idCategoria)){
+                anuncio.setCategoria(c);
+            }
         }
         anuncioDao.alterar(anuncio);
         anunciosfornecedor = anuncioDao.getAnunciosFornecedor(usuario.getId()); 
         anuncios = anuncioDao.getAnuncios();
+        anunciosaprovar = anuncioDao.getAnunciosAprovar();
+        anunciosaprovados = anuncioDao.getAnunciosAprovados();
         return "LstAnuncio";
     }
     
@@ -369,17 +384,17 @@ public class GuiAdm implements Serializable {
         this.anuncio = anuncio;
     }
 
-    public Long getIdSubcategoria() {
-        return idSubcategoria;
+    public Long getIdCategoria() {
+        return idCategoria;
     }
 
-    public void setIdSubcategoria(Long idSubcategoria) {
-        this.idSubcategoria = idSubcategoria;
+    public void setIdCategoria(Long idCategoria) {
+        this.idCategoria = idCategoria;
     }
     
-    public List<Subcategoria> getSubcategorias(){
-        subcategorias = subcategoriaDao.getSubcategorias();
-        return subcategorias;
+    public List<Categoria> getCategorias(){
+        categorias = categoriaDao.getCategorias();
+        return categorias;
     }
 
     public List<Anuncio> getAnuncios() {
@@ -444,6 +459,16 @@ public class GuiAdm implements Serializable {
         }
         
         return "LstAnuncioBusca";
+    }
+    
+    public String buscarAnuncioFornecedor(Long idUsuario){
+        anunciosfornecedoraprovados = anuncioDao.getAnunciosFornecedorAprovados(idUsuario);
+        return "LstAnuncioFornecedor";
+    }
+    
+    public String buscarAnunciosCategoria(Long idCategoria){
+        anuncioscategoria = anuncioDao.getAnunciosCategoria(idCategoria);
+        return "LstAnuncioCategoria";
     }
 
     public String getSearch() {
@@ -514,6 +539,22 @@ public class GuiAdm implements Serializable {
 
     public void setFileanuncio6(UploadedFile fileanuncio6) {
         this.fileanuncio6 = fileanuncio6;
+    }
+
+    public List<Anuncio> getAnunciosfornecedoraprovados() {
+        return anunciosfornecedoraprovados;
+    }
+
+    public void setAnunciosfornecedoraprovados(List<Anuncio> anunciosfornecedoraprovados) {
+        this.anunciosfornecedoraprovados = anunciosfornecedoraprovados;
+    }
+
+    public List<Anuncio> getAnuncioscategoria() {
+        return anuncioscategoria;
+    }
+
+    public void setAnuncioscategoria(List<Anuncio> anuncioscategoria) {
+        this.anuncioscategoria = anuncioscategoria;
     }
     
     

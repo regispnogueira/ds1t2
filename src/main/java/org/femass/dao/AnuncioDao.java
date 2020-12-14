@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.femass.model.Anuncio;
+import org.femass.model.Categoria;
 
 
 
@@ -51,6 +52,16 @@ public class AnuncioDao {
     public List<Anuncio> getAnunciosFornecedor(Long idUsuario) {
         Query q = em.createQuery("select a from Anuncio a where a.fornecedor.usuario.id = :idUsuario");
         q.setParameter("idUsuario", idUsuario);
+        return q.getResultList();
+    }
+    public List<Anuncio> getAnunciosFornecedorAprovados(Long idUsuario) {
+        Query q = em.createQuery("select a from Anuncio a where a.fornecedor.usuario.id = :idUsuario AND a.aprovacao is not null");
+        q.setParameter("idUsuario", idUsuario);
+        return q.getResultList();
+    }
+    public List<Anuncio> getAnunciosCategoria(Long idCategoria) {
+        Query q = em.createQuery("select a from Anuncio a where a.categoria.id = :idCategoria AND a.aprovacao is not null");
+        q.setParameter("idCategoria", idCategoria);
         return q.getResultList();
     }
     public List<Anuncio> getAnunciosBusca(String search){

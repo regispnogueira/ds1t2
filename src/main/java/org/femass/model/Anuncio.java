@@ -36,11 +36,10 @@ public class Anuncio implements Serializable {
     private LocalDate dataaprovacao;
     private String descricao;
     private Double valor;
-    private LocalDate validade;
     @OneToMany(cascade = CascadeType.ALL)
     private List<FotoAnuncio> fotos;
     @OneToOne
-    private Subcategoria subcategoria;
+    private Categoria categoria;
     private TipoProduto tipoproduto;
     
     
@@ -126,20 +125,12 @@ public class Anuncio implements Serializable {
         this.valor = valor;
     }
 
-    public LocalDate getValidade() {
-        return validade;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setValidade(LocalDate validade) {
-        this.validade = validade;
-    }
-
-    public Subcategoria getSubcategoria() {
-        return subcategoria;
-    }
-
-    public void setSubcategoria(Subcategoria subcategoria) {
-        this.subcategoria = subcategoria;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     public TipoProduto getTipoproduto() {

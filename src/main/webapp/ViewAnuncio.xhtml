@@ -16,20 +16,35 @@
                             <h:graphicImage value="#{image.foto}" alt="#{image}" width="400" height="300" />
                         </p:galleria>
                         <p:panelGrid columns="1" >
+                            <p:outputLabel value="#{guiAdm.anuncio.tipoproduto}" style="font-weight: bold;"  />
                             <p:outputLabel value="#{guiAdm.anuncio.nome}" />
                             <p:outputLabel value="#{guiAdm.anuncio.descricao}"  />
                             <p:outputLabel value="R$ #{guiAdm.anuncio.valor}"  />
-                            <p:outputLabel value="#{guiAdm.anuncio.fornecedor.nome}"  />
-                            <p:outputLabel value="#{guiAdm.anuncio.fornecedor.telefone}"  />
-                            <p:outputLabel value="#{guiAdm.anuncio.fornecedor.whatsapp}"  />
+                            <p:commandLink value="#{guiAdm.anuncio.fornecedor.nome}" style="font-weight: bold;" action="#{guiAdm.buscarAnuncioFornecedor(guiAdm.fornecedor.usuario.id)}"  />
+                            <p:outputLabel >
+                                <i class="fa fa-phone" />
+                                #{guiAdm.anuncio.fornecedor.telefone}
+                            </p:outputLabel>
+                            <p:outputLabel >
+                                <i class="fa fa-whatsapp" />
+                                #{guiAdm.anuncio.fornecedor.whatsapp}
+                            </p:outputLabel>
                             <p:outputLabel value="#{guiAdm.anuncio.fornecedor.endereco}"  />
                             <p:outputLabel value="#{guiAdm.anuncio.fornecedor.bairro.nome}"  />
-                            <p:outputLabel value="#{guiAdm.anuncio.fornecedor.url}"  />
-                            <p:outputLabel value="#{guiAdm.anuncio.fornecedor.instagram}"  />
-                            <p:outputLabel value="#{guiAdm.anuncio.fornecedor.facebook}"  />
+                            <p:outputLabel >
+                                <i class="fa fa-globe" />
+                                #{guiAdm.anuncio.fornecedor.url}
+                            </p:outputLabel>
+                            <p:outputLabel >
+                                <i class="fa fa-instagram" />
+                                #{guiAdm.anuncio.fornecedor.instagram}
+                            </p:outputLabel>
+                            <p:outputLabel >
+                                <i class="fa fa-facebook-square" />
+                                #{guiAdm.anuncio.fornecedor.facebook} 
+                            </p:outputLabel>
                         </p:panelGrid>
                     </p:panelGrid>
-
                 </h:form>
             </ui:define>
         </ui:composition>

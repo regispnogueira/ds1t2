@@ -29,6 +29,9 @@
                         <p:menuitem value="Meus anuncios" action="#{guiAdm.meusAnuncios()}" />
                         <p:menuitem value="Sair" action="#{guiAdm.sairUsuario()}" />
                     </p:submenu>
+                    <p:menuitem action="#{guiAdm.buscarAnunciosCategoria(0)}" icon="fa fa-car" style="margin-left: 50px" />
+                    <p:menuitem action="#{guiAdm.buscarAnunciosCategoria(1)}" icon="fa fa-desktop" style="margin-left: 10px"  />
+                    <p:menuitem action="#{guiAdm.buscarAnunciosCategoria(2)}" icon="fa fa-building" style="margin-left: 10px"  />
                 </p:menubar>
             </h:form>
 

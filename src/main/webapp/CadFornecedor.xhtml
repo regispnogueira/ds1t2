@@ -12,21 +12,24 @@
         <ui:composition template="template.xhtml">
             <ui:define name="content">
                 <h:form enctype="multipart/form-data">
+                    <p:messages id="messages"/>
                     <p:panelGrid columns="2" >
+                        <p:outputLabel value="Email Usuario" />
+                        <p:inputText value="#{guiAdm.fornecedor.usuario.email}" style="width:250px" disabled="true" />
                         <p:outputLabel value="Nome*" />
-                        <p:inputText value="#{guiAdm.fornecedor.nome}" />
+                        <p:inputText value="#{guiAdm.fornecedor.nome}" required="true" requiredMessage="Nome de preenchimento obrigatório" />
                         <p:outputLabel value="Telefone*" />
-                        <p:inputMask value="#{guiAdm.fornecedor.telefone}" mask="(99)99999-9999" />
+                        <p:inputMask value="#{guiAdm.fornecedor.telefone}" mask="(99)99999-9999" required="true" requiredMessage="Telefone de preenchimento obrigatório" />
                         <p:outputLabel value="Whatsapp*" />
-                        <p:inputMask value="#{guiAdm.fornecedor.whatsapp}" mask="(99)99999-9999" />
+                        <p:inputMask value="#{guiAdm.fornecedor.whatsapp}" mask="(99)99999-9999" required="true" requiredMessage="Whatsapp de preenchimento obrigatório" />
                         <p:outputLabel value="Endereço*" />
-                        <p:inputText value="#{guiAdm.fornecedor.endereco}" />
+                        <p:inputText value="#{guiAdm.fornecedor.endereco}" required="true" requiredMessage="Endereço de preenchimento obrigatório" />
                         <p:outputLabel value="Bairro" />
                         <p:selectOneMenu value="#{guiAdm.idBairro}" style="width:250px"  >
                             <f:selectItems value="#{guiAdm.bairros}" var="b" itemLabel="#{b.nome}" itemValue="#{b.id}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="CEP*" />
-                        <p:inputMask value="#{guiAdm.fornecedor.cep}" mask="99999-999" />
+                        <p:inputMask value="#{guiAdm.fornecedor.cep}" mask="99999-999" required="true" requiredMessage="CEP de preenchimento obrigatório" />
                         <p:outputLabel value="URL" />
                         <p:inputText value="#{guiAdm.fornecedor.url}" />
                         <p:outputLabel value="Facebook" />
@@ -36,7 +39,7 @@
                         <p:outputLabel value="Foto (Fachada ou Logo)*" />
                         <p:fileUpload value="#{guiAdm.filefornecedor}" mode="simple" skinSimple="true"/>
                     </p:panelGrid>
-                    <p:commandButton value="Gravar" action="#{guiAdm.gravarFornecedor()}" ajax="false" />
+                    <p:commandButton value="Gravar" action="#{guiAdm.gravarFornecedor()}" ajax="false" update="messages" />
                 </h:form>
             </ui:define>
         </ui:composition>        
